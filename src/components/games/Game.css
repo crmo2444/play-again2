@@ -13,3 +13,12 @@
     height: 15rem;
     margin: 1rem;
 }
+
+.gameLibrary {
+    display: flex;
+    flex-direction: row;
+}
+
+.game {
+    margin: 1rem;
+}

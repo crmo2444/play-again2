@@ -10,11 +10,17 @@ export const NavBar = () => {
     return <>
         <ul className="navbar">
             <li className="navbar__item active">
-                <Link className="navbar__link" to="/search">Search</Link>
+                <Link className="navbar__link" to="/search">Find Games</Link>
+            </li>
+            <li className="navbar__item active">
+                <Link className="navbar__link" to="/library">My Game Library</Link>
+            </li>
+            <li className="navbar__item active">
+                <Link className="navbar__link" to="/wishlist">My Wishlist</Link>
             </li>
 
             {
-                localStorage.getItem("kandy_user")
+                localStorage.getItem("current_user")
                     ?
             <li className="navbar__item navbar__logout">
                 <Link className="navbar__link" to="" onClick={() => {
