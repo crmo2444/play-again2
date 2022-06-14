@@ -1,0 +1,15 @@
+.gameImage {
+    width: 20rem;
+    height: 15rem;
+}
+
+.screenshots {
+    display: flex;
+    flex-direction: row;
+}
+
+.screenshot {
+    width: 20rem;
+    height: 15rem;
+    margin: 1rem;
+}

@@ -1,5 +1,6 @@
 import React from "react"
 import { Outlet, Route, Routes } from "react-router-dom"
+import { GameDetails } from "../games/GameDetails"
 import { GameSearch } from "../games/GameSearch"
 
 export const ApplicationViews = () => {
@@ -14,6 +15,7 @@ export const ApplicationViews = () => {
             }>
 
             <Route path="search" element={ <GameSearch /> } />
+            <Route path="game/:gameId" element={ <GameDetails /> } />
 
             </Route>
         </Routes>
