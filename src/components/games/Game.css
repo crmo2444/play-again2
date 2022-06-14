@@ -14,7 +14,7 @@
     margin: 1rem;
 }
 
-.gameLibrary {
+.gameLibrary, .gameWishlist {
     display: flex;
     flex-direction: row;
 }
