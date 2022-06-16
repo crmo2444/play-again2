@@ -7,6 +7,7 @@ export const Game = ({gameObject}) => {
     const [consoles, setConsoles] = useState([])
     const [chosenConsole, setChosen] = useState("")
     const [platformDetails, setPlatformDetails] = useState([])
+    const [wishlist, setWishlist] = useState([])
 
     let navigate = useNavigate()
 
@@ -19,6 +20,12 @@ export const Game = ({gameObject}) => {
                 .then(response=>response.json())
                 .then((data) => {
                     setLibrary(data)
+                })
+
+            fetch(`http://localhost:8088/wishlistGames`)
+                .then(response=>response.json())
+                .then((data) => {
+                    setWishlist(data)
                 })
 
             fetch(`http://localhost:8089/consoles`)
@@ -43,10 +50,11 @@ export const Game = ({gameObject}) => {
         let foundGame = false
 
         library.map(game => {
-            if (game.gameId === gameObject.id && game.library === true && game.platformId === chosenConsole) {
+            if (game.gameId === gameObject.id && game.platform === chosenConsole) {
                 foundGame = true
             }
         })
+        console.log(chosenConsole)
 
         let foundPlatform = platformDetails.find(platform => platform.id === chosenConsole)
 
@@ -91,10 +99,18 @@ export const Game = ({gameObject}) => {
 
     const checkWishlist = () => {
 
-        let foundGame = library.find(game => game.gameId === gameObject.id && game.wishlist === true)
+        let foundGame = false
+
+        wishlist.map(game => {
+            if (game.gameId === gameObject.id && game.platform === chosenConsole) {
+                foundGame = true
+            }
+        })
+
+        let foundPlatform = platformDetails.find(platform => platform.id === chosenConsole)
 
         if (foundGame) {
-            return window.alert(`${gameObject.name} already in wishlist!`)
+            return window.alert(`${gameObject.name} on ${foundPlatform.name} already in wishlist!`)
         }
         else if (chosenConsole === "") {
             return window.alert(`Please choose a platform.`)
