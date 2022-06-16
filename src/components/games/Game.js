@@ -3,7 +3,10 @@ import { Link, useNavigate } from "react-router-dom"
 
 export const Game = ({gameObject}) => {
     const [feedback, setFeedback] = useState("")
-    const [libraryAndWishlist, setLibraryAndWishlist] = useState([])
+    const [library, setLibrary] = useState([])
+    const [consoles, setConsoles] = useState([])
+    const [chosenConsole, setChosen] = useState("")
+    const [platformDetails, setPlatformDetails] = useState([])
 
     let navigate = useNavigate()
 
@@ -12,11 +15,19 @@ export const Game = ({gameObject}) => {
 
     useEffect(
         () => {
-            fetch(`http://localhost:8088/libraryAndWishlist`)
+            fetch(`http://localhost:8088/libraryGames`)
                 .then(response=>response.json())
                 .then((data) => {
-                    setLibraryAndWishlist(data)
+                    setLibrary(data)
                 })
+
+            fetch(`http://localhost:8089/consoles`)
+                .then(response=>response.json())
+                .then((data) => {
+                    setPlatformDetails(data)
+                })
+
+            setConsoles(gameObject?.platforms)
         },
         []
     )
@@ -29,28 +40,43 @@ export const Game = ({gameObject}) => {
     }, [feedback])
 
     const checkLibrary = () => {
+        let foundGame = false
 
-        let foundGame = libraryAndWishlist.find(game => game.gameId === gameObject.id && game.library === true)
+        library.map(game => {
+            if (game.gameId === gameObject.id && game.library === true && game.platformId === chosenConsole) {
+                foundGame = true
+            }
+        })
 
-        if (typeof foundGame === 'undefined') {
-            addToLibrary()
+        let foundPlatform = platformDetails.find(platform => platform.id === chosenConsole)
+
+        if (foundGame) {
+            return window.alert(`${gameObject.name} on ${foundPlatform.name} already in library.`)
+        }
+        else if (chosenConsole === "") {
+            return window.alert(`Please choose a platform.`)
         }
         else {
-            return window.alert(`${gameObject.name} already in library!`)
+            addToLibrary()
         }
         
     }
 
     const addToLibrary = () => {
+        
+        let foundPlatform = platformDetails.find(platform => platform.id === chosenConsole)
+
             const newGame = {
                 userId: localUserObject.id,
                 gameId: gameObject.id,
-                library: true,
-                wishlist: false
+                platform: chosenConsole,
+                image: gameObject.background_image,
+                platformName: foundPlatform.name,
+                gameName: gameObject.name
             }
     
         // TODO: Perform the fetch() to POST the object to the API
-        fetch('http://localhost:8088/libraryAndWishlist', {
+        fetch('http://localhost:8088/libraryGames', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -65,26 +91,33 @@ export const Game = ({gameObject}) => {
 
     const checkWishlist = () => {
 
-        let foundGame = libraryAndWishlist.find(game => game.gameId === gameObject.id && game.wishlist === true)
+        let foundGame = library.find(game => game.gameId === gameObject.id && game.wishlist === true)
 
-        if (typeof foundGame === 'undefined') {
-            addToWishlist()
+        if (foundGame) {
+            return window.alert(`${gameObject.name} already in wishlist!`)
+        }
+        else if (chosenConsole === "") {
+            return window.alert(`Please choose a platform.`)
         }
         else {
-            return window.alert(`${gameObject.name} already in wishlist!`)
+            addToWishlist()
         }
     }
 
     const addToWishlist = () => {
+        let foundPlatform = platformDetails.find(platform => platform.id === chosenConsole)
+        console.log(foundPlatform)
         const newGame = {
             userId: localUserObject.id,
             gameId: gameObject.id,
-            library: false,
-            wishlist: true
+            platform: chosenConsole,
+            image: gameObject.background_image,
+            platformName: foundPlatform.name,
+            gameName: gameObject.name
         }
 
     // TODO: Perform the fetch() to POST the object to the API
-    fetch('http://localhost:8088/libraryAndWishlist', {
+    fetch('http://localhost:8088/wishlistGames', {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -102,6 +135,15 @@ export const Game = ({gameObject}) => {
         {feedback}
         </div>
                 <h4>{gameObject.name}</h4>
+                <select className="platforms" onChange={(event) => {
+                    let chosenPlatform = event.target.value
+                    setChosen(parseInt(chosenPlatform))
+                }}>
+                    <option value="0">Choose a Platform...</option>
+                    {consoles.map(console => {
+                        return <option value={`${console?.platform?.id}`}>{console?.platform?.name}</option>
+                    })}
+                </select>
                 {/* <img className="resultPictures" src={result?.short_screenshots[0]?.image}/> */}
                 <button onClick={() => navigate(`/game/${gameObject.id}`)}>Details</button>
                 <button onClick={(event) => checkLibrary(event)}>Add to Library</button>

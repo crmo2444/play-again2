@@ -1,6 +1,7 @@
 
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
+import { LibraryGame } from "./LibraryGame"
 
 export const GameLibrary = () => {
     const [games, setGames] = useState([])
@@ -14,11 +15,10 @@ export const GameLibrary = () => {
 
     useEffect(
         () => {
-            fetch(`http://localhost:8088/games`)
+            fetch(`http://localhost:8089/games`)
                 .then(response=>response.json())
                 .then((data) => {
-                    let dataArray = data[0].results
-                    setGames(dataArray)
+                    setGames(data)
                 })
 
             fetch(`http://localhost:8088/users?id=${localUserObject.id}`)
@@ -28,7 +28,7 @@ export const GameLibrary = () => {
                     setCurrentUser(singleUser)
                 })
 
-            fetch(`http://localhost:8088/libraryAndWishlist?library=true&userId=${localUserObject.id}`)
+            fetch(`http://localhost:8088/libraryGames?userId=${localUserObject.id}`)
                 .then(response=>response.json())
                 .then((data) => {
                     if(data.length !== 0) {
@@ -36,7 +36,7 @@ export const GameLibrary = () => {
                         setHasGames(true)
                     }
                 })
-
+ 
         },
         []
     )
@@ -64,14 +64,11 @@ export const GameLibrary = () => {
     <h2>{currentUser.firstName}'s Game Library</h2>
     <section className="gameLibrary">
         {hasGames === true ? <>
-        {filteredGames.map(game => {
-            return <section className="game">
-                <div>{game.name}</div>
-                <Link to={`/game/${game.id}`}>
-                <img className="gameImage" src={game.background_image}/>
-                </Link>
-                </section>
-        })}
+        {currentUserLibrary.map(game => {
+            return <LibraryGame key={`game--${game.id}`} 
+            gameObject={game} 
+            setterGames={setHasGames} 
+            setterLibrary = {setCurrentUserLibrary} /> })}
         </> : <div>No games in library.</div>}
     </section>
     </>

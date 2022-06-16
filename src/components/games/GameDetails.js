@@ -14,11 +14,10 @@ export const GameDetails = () => {
 
     useEffect(
         () => {
-            fetch(`http://localhost:8088/games`)
+            fetch(`http://localhost:8089/games`)
             .then(response=>response.json())
             .then((data) => {
-                let dataArray = data[0].results
-                setGames(dataArray)
+                setGames(data)
             })
 
             fetch(`http://localhost:8088/gameDetails?id=${gameId}`)

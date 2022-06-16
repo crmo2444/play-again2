@@ -10,6 +10,9 @@ export const NavBar = () => {
     return <>
         <ul className="navbar">
             <li className="navbar__item active">
+                <Link className="navbar__link" to="/">Homepage/Logo</Link>
+            </li>
+            <li className="navbar__item active">
                 <Link className="navbar__link" to="/search">Find Games</Link>
             </li>
             <li className="navbar__item active">
@@ -17,6 +20,9 @@ export const NavBar = () => {
             </li>
             <li className="navbar__item active">
                 <Link className="navbar__link" to="/wishlist">My Wishlist</Link>
+            </li>
+            <li className="navbar__item active">
+                <Link className="navbar__link" to="/play-again">Play Again!</Link>
             </li>
 
             {

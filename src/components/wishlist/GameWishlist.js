@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
-import "./Game.css"
+import { WishlistGame } from "./WishlistGame"
 
 export const GameWishlist = () => {
     const [games, setGames] = useState([])
@@ -15,11 +15,10 @@ export const GameWishlist = () => {
 
     useEffect(
         () => {
-            fetch(`http://localhost:8088/games`)
+            fetch(`http://localhost:8089/games`)
                 .then(response=>response.json())
                 .then((data) => {
-                    let dataArray = data[0].results
-                    setGames(dataArray)
+                    setGames(data)
                 })
 
             fetch(`http://localhost:8088/users?id=${localUserObject.id}`)
@@ -29,7 +28,7 @@ export const GameWishlist = () => {
                     setCurrentUser(singleUser)
                 })
 
-            fetch(`http://localhost:8088/libraryAndWishlist?wishlist=true&userId=${localUserObject.id}`)
+            fetch(`http://localhost:8088/wishlistGames?userId=${localUserObject.id}`)
                 .then(response=>response.json())
                 .then((data) => {
                     if(data.length !== 0) {
@@ -65,14 +64,11 @@ export const GameWishlist = () => {
     <h2>{currentUser.firstName}'s Wishlist</h2>
     <section className="gameWishlist">
         {hasGames === true ? <>
-        {filteredGames.map(game => {
-            return <section className="game">
-                <div>{game.name}</div>
-                <Link to={`/game/${game.id}`}>
-                <img className="gameImage" src={game.background_image}/>
-                </Link>
-                </section>
-        })}
+        {currentUserWishlist.map(game => {
+               return <WishlistGame key={`game--${game.id}`}
+               gameObject={game} 
+               setterGames={setHasGames}
+               setterWishlist={setCurrentUserWishlist}/> })}
         </> : <div>No games in wishlist.</div>}
     </section>
     </>
