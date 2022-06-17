@@ -11,6 +11,7 @@ export const GameDetails = () => {
     const [gameDescription, setDescription] = useState([])
     const [gameScreenshots, setScreenshots] = useState([])
     const [gameGenres, setGenres] = useState([])
+    const [hasDetails, setHasDetails] = useState(true)
 
     useEffect(
         () => {
@@ -23,8 +24,13 @@ export const GameDetails = () => {
             fetch(`http://localhost:8088/gameDetails?id=${gameId}`)
             .then(response=>response.json())
             .then((data) => {
-                let singleGame = data[0]
-                setDescription(singleGame)
+                if(data.length !== 0) {
+                    let singleGame = data[0]
+                    setDescription(singleGame)
+                }
+                else {
+                    setHasDetails(false)
+                }
             })
         },
         []
@@ -55,30 +61,32 @@ export const GameDetails = () => {
     )
 
     return <>
-    <h3>{currentGame.name}</h3>
-    <img className="gameImage" src={currentGame.background_image}/>
-    <div>Available on: </div>
-    {gamePlatforms ? <>
-    {gamePlatforms.map(gamePlatform => {
-        return <div>{gamePlatform.platform.name}</div>
-    })}
-    </> : null}
-    <br></br>
-    <div>Genres: </div>
-    {gameGenres ? <>
-    {gameGenres.map(genre => {
-        return <div>{genre.name}</div>
-    })}
-    </> : null}
-    <br></br>
-    <div>{gameDescription.description}</div>
-    <section className="screenshots">
-        {gameScreenshots ? <>
-            {gameScreenshots.map(screenshot => {
-                if(screenshot.id !== -1) {
-                    return <img className="screenshot" src={screenshot.image}/>
-                }
-        })}</> : null }
-    </section>
+    {hasDetails ? <>
+        <h3>{currentGame.name}</h3>
+        <img className="gameImage" src={currentGame.background_image}/>
+        <div>Available on: </div>
+        {gamePlatforms ? <>
+        {gamePlatforms.map(gamePlatform => {
+            return <div>{gamePlatform.platform.name}</div>
+        })}
+        </> : null}
+        <br></br>
+        <div>Genres: </div>
+        {gameGenres ? <>
+        {gameGenres.map(genre => {
+            return <div>{genre.name}</div>
+        })}
+        </> : null}
+        <br></br>
+        <div>{gameDescription.description}</div>
+        <section className="screenshots">
+            {gameScreenshots ? <>
+                {gameScreenshots.map(screenshot => {
+                    if(screenshot.id !== -1) {
+                        return <img className="screenshot" src={screenshot.image}/>
+                    }
+            })}</> : null }
+        </section>
+        </> : <div>No details yet!</div>}
     </>
 }

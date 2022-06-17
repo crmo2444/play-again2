@@ -24,6 +24,9 @@ export const NavBar = () => {
             <li className="navbar__item active">
                 <Link className="navbar__link" to="/play-again">Play Again!</Link>
             </li>
+            <li className="navbar__item active">
+                <Link className="navbar__link" to="/profile">Profile</Link>
+            </li>
 
             {
                 localStorage.getItem("current_user")
