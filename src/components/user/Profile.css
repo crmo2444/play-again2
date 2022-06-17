@@ -3,3 +3,23 @@
     height: 10rem;
     margin: 1rem;
 }
+
+.topHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.close:hover {
+    cursor: pointer;
+}
+
+.profileDetails {
+    display: flex;
+    flex-direction: row;
+}
+
+button {
+    width: 9rem;
+    height: 1.5rem;
+}

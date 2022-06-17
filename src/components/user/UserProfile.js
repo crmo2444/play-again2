@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react"
 import { keys } from "../../Settings"
 import { EditProfilePicture } from "./EditProfilePicture"
+import { EditProfileSettings } from "./EditProfileSettings"
 import "./Profile.css"
 
 export const UserProfile = () => {
     const [currentUser, setCurrentUser] = useState({})
+    const [edit, setEdit] = useState(false)
 
     const localUser = localStorage.getItem("current_user")
     const localUserObject = JSON.parse(localUser)
@@ -23,6 +25,10 @@ export const UserProfile = () => {
 
     return <section className="profileDetails">
         <div className="profilePicture"><img className="picture" src={currentUser.profilePicture}/></div>
-        <div><EditProfilePicture id={localUserObject.id} userObject={currentUser}/></div>
+        <section className="buttons">
+            <div><EditProfilePicture id={localUserObject.id} userObject={currentUser}/></div>
+            {edit ? <EditProfileSettings setEdit={setEdit}/> 
+            : <button className="editAccount" onClick={() => {setEdit(true)}}>Edit Account Settings</button>}
+        </section>
     </section>
 }
