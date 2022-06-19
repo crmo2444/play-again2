@@ -4,9 +4,8 @@ import { Link, useNavigate } from "react-router-dom"
 export const Game = ({gameObject}) => {
     const [feedback, setFeedback] = useState("")
     const [library, setLibrary] = useState([])
-    const [consoles, setConsoles] = useState([])
+    const [platforms, setPlatforms] = useState([])
     const [chosenConsole, setChosen] = useState("")
-    const [platformDetails, setPlatformDetails] = useState([])
     const [wishlist, setWishlist] = useState([])
 
     let navigate = useNavigate()
@@ -28,13 +27,7 @@ export const Game = ({gameObject}) => {
                     setWishlist(data)
                 })
 
-            fetch(`http://localhost:8089/consoles`)
-                .then(response=>response.json())
-                .then((data) => {
-                    setPlatformDetails(data)
-                })
-
-            setConsoles(gameObject?.platforms)
+            setPlatforms(gameObject?.platforms)
         },
         []
     )
@@ -50,13 +43,12 @@ export const Game = ({gameObject}) => {
         let foundGame = false
 
         library.map(game => {
-            if (game.gameId === gameObject.id && game.platform === chosenConsole) {
+            if (game?.gameObject?.id === gameObject.id && game.platform === chosenConsole) {
                 foundGame = true
             }
         })
-        console.log(chosenConsole)
 
-        let foundPlatform = platformDetails.find(platform => platform.id === chosenConsole)
+        let foundPlatform = platforms.find(platform => platform.id === chosenConsole)
 
         if (foundGame) {
             return window.alert(`${gameObject.name} on ${foundPlatform.name} already in library.`)
@@ -65,22 +57,17 @@ export const Game = ({gameObject}) => {
             return window.alert(`Please choose a platform.`)
         }
         else {
-            addToLibrary()
+            addToLibrary(foundPlatform)
         }
         
     }
 
-    const addToLibrary = () => {
-        
-        let foundPlatform = platformDetails.find(platform => platform.id === chosenConsole)
+    const addToLibrary = (platform) => {
 
             const newGame = {
                 userId: localUserObject.id,
-                gameId: gameObject.id,
-                platform: chosenConsole,
-                image: gameObject.background_image,
-                platformName: foundPlatform.name,
-                gameName: gameObject.name
+                gameObject: gameObject,
+                platform: chosenConsole
             }
     
         // TODO: Perform the fetch() to POST the object to the API
@@ -107,7 +94,7 @@ export const Game = ({gameObject}) => {
             }
         })
 
-        let foundPlatform = platformDetails.find(platform => platform.id === chosenConsole)
+        let foundPlatform = platforms.find(platform => platform.id === chosenConsole)
 
         if (foundGame) {
             return window.alert(`${gameObject.name} on ${foundPlatform.name} already in wishlist!`)
@@ -116,20 +103,17 @@ export const Game = ({gameObject}) => {
             return window.alert(`Please choose a platform.`)
         }
         else {
-            addToWishlist()
+            addToWishlist(foundPlatform)
         }
     }
 
-    const addToWishlist = () => {
-        let foundPlatform = platformDetails.find(platform => platform.id === chosenConsole)
-        console.log(foundPlatform)
+    const addToWishlist = (platform) => {
+
+        console.log(platform)
         const newGame = {
             userId: localUserObject.id,
-            gameId: gameObject.id,
-            platform: chosenConsole,
-            image: gameObject.background_image,
-            platformName: foundPlatform.name,
-            gameName: gameObject.name
+            gameObject: gameObject,
+            platform: chosenConsole
         }
 
     // TODO: Perform the fetch() to POST the object to the API
@@ -150,19 +134,31 @@ export const Game = ({gameObject}) => {
         <div className={`${feedback.includes("Error") ? "error" : "feedback"} ${feedback === "" ? "invisible" : "visible"}`}>
         {feedback}
         </div>
-                <h4>{gameObject.name}</h4>
-                <select className="platforms" onChange={(event) => {
-                    let chosenPlatform = event.target.value
-                    setChosen(parseInt(chosenPlatform))
-                }}>
-                    <option value="0">Choose a Platform...</option>
-                    {consoles.map(console => {
-                        return <option value={`${console?.platform?.id}`}>{console?.platform?.name}</option>
-                    })}
-                </select>
-                {/* <img className="resultPictures" src={result?.short_screenshots[0]?.image}/> */}
-                <button onClick={() => navigate(`/game/${gameObject.id}`)}>Details</button>
-                <button onClick={(event) => checkLibrary(event)}>Add to Library</button>
-                <button onClick={(event) => checkWishlist(event)}>Add to Wishlist</button>
+                <section>
+                    <img className="coverPhoto" src={gameObject?.image?.original_url}/>
+                </section>
+
+                <div className="titleDetails">
+                    <div className="gameTitle">
+                        <Link to={`/game/${gameObject.id}`}> {gameObject.name}</Link>
+                    </div>
+                    <div className="gameDescription">
+                        <div>{gameObject.deck}</div>
+                    </div>
+                    <div className="dropdownButtons">
+                        <select className="platforms" onChange={(event) => {
+                            let chosenPlatform = event.target.value
+                            setChosen(parseInt(chosenPlatform))
+                        }}>
+                            <option value="0">Platforms...</option>
+                            {gameObject.platforms.map(platform => {
+                                return <option value={`${platform.id}`}>{platform.name}</option>
+                            })}
+                        </select>
+                        {/* <img className="resultPictures" src={result?.short_screenshots[0]?.image}/> */}
+                        <button onClick={(event) => checkLibrary(event)}>Add to Library</button>
+                        <button onClick={(event) => checkWishlist(event)}>Add to Wishlist</button>
+                    </div>
+                </div>
             </section>
 }

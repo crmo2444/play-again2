@@ -1,14 +1,27 @@
+import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { WishlistGameDelete } from "./WishlistGameDelete"
 
-export const WishlistGame = ({gameObject, setterGames, setterWishlist}) => {
+export const WishlistGame = ({game, setterGames, setterWishlist}) => {
+    const [foundPlatform, setFoundPlatform] = useState({})
+
+    useEffect(
+        () => {
+            game?.gameObject?.platforms.map(platform => {
+                if(platform.id === game.platform) {
+                    setFoundPlatform(platform)
+                }
+            })
+        },
+        []
+    )
 
     return <section className="game">
-        <div>{gameObject.gameName}</div>
-        <Link to={`/game/${gameObject.gameId}`}>
-        <img className="gameImage" src={gameObject.image}/>
+        <div>{game?.gameObject?.name}</div>
+        <Link to={`/game/${game?.gameObject?.id}`}>
+        <img className="gameImage" src={game?.gameObject?.image?.original_url}/>
         </Link>
-        <div>On {gameObject.platformName}</div>
-        <WishlistGameDelete id={gameObject.id} setEmpty={setterGames} setWishlist={setterWishlist} />
+        <div>On {foundPlatform.name}</div>
+        <WishlistGameDelete id={game.id} setEmpty={setterGames} setWishlist={setterWishlist} />
     </section> 
 }

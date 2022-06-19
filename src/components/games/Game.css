@@ -1,8 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 
 .gameImage {
-    width: 20rem;
-    height: 15rem;
+    width: 15rem;
+    height: 20rem;
+    border: 1px solid grey;
+    box-shadow: 5px 4px #888888;
 }
 
 .screenshots {
@@ -17,13 +19,40 @@
     margin: 1rem;
 }
 
-.gameLibrary, .gameWishlist {
+.resultsContainer {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    align-content: space-between;
 }
 
 .game {
-    margin: 1rem;
+    margin-bottom: 1rem;
+    flex-direction: row;
+    height: 10rem;
+    margin-left: 1rem;
+}
+
+.coverPhoto {
+    text-align: left;
+    height: 10rem;
+    width: 8rem;
+    border: 1px solid grey;
+    box-shadow: 5px 4px #888888
+}
+
+.titleDetails {
+    position: relative;
+    bottom: 10.5rem;
+    left: 9rem;
+}
+
+.gameDescription {
+    height: 4rem;
+}
+
+.dropdownButtons {
+    position: relative;
+    top: 3rem;
 }
 
 .imageDetails {
@@ -59,4 +88,21 @@
     font-size: 12pt;
     max-width: 20rem;
     opacity: 0;
+}
+
+.pageNumber {
+    background: none;
+    border: none;
+    font-family: arial, sans-serif;
+    color: #069;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.pageNumber:focus {
+    color: purple;
+}
+
+.newGamesButton {
+    width: 8rem;
 }

@@ -1,0 +1,5 @@
+
+.gameLibrary {
+    display: flex;
+    flex-direction: row;
+}
