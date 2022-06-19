@@ -43,7 +43,7 @@ export const HomepageLibrary = () => {
         textAlign: 'center',
         fontSize: '30px',
         width: '10rem',
-        height: '30rem'
+        height: '20rem',
       };
       
     const text = {
@@ -82,7 +82,7 @@ export const HomepageLibrary = () => {
             <Slide {...properties}>
                 {gameImages.map(image => {
                     return <>
-                    <div style={style}><img width="650" height="500" src={`${image.image}`}/></div>
+                    <div style={style}><img width="500" height="400" src={`${image.image}`}/></div>
                     <div style={text}>{image.name}</div>
                     </>
                 })}

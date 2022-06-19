@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { keys } from "../../Settings"
+import { EditBio } from "./EditBio"
 import { EditProfilePicture } from "./EditProfilePicture"
 import { EditProfileSettings } from "./EditProfileSettings"
 import "./Profile.css"
@@ -30,5 +31,6 @@ export const UserProfile = () => {
             {edit ? <EditProfileSettings setEdit={setEdit}/> 
             : <button className="editAccount" onClick={() => {setEdit(true)}}>Edit Account Settings</button>}
         </section>
+        <div><EditBio id={localUserObject.id}/></div>
     </section>
 }

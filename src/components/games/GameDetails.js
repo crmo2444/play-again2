@@ -62,8 +62,10 @@ export const GameDetails = () => {
 
     return <>
     {hasDetails ? <>
-        <h3>{currentGame.name}</h3>
-        <img className="gameImage" src={currentGame.background_image}/>
+        <h3 className="title">{currentGame.name}</h3>
+        <div className="imageDetails" 
+        /* onMouseOver={event => event.target.play()} 
+        src={`${vid.videos.tiny.url}#t=1`} */><img className="game-details" src={currentGame.background_image}/></div>
         <div>Available on: </div>
         {gamePlatforms ? <>
         {gamePlatforms.map(gamePlatform => {
@@ -78,7 +80,7 @@ export const GameDetails = () => {
         })}
         </> : null}
         <br></br>
-        <div>{gameDescription.description}</div>
+        <div className="description">{gameDescription.description}</div>
         <section className="screenshots">
             {gameScreenshots ? <>
                 {gameScreenshots.map(screenshot => {

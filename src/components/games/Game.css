@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
 .gameImage {
     width: 20rem;
     height: 15rem;
@@ -6,6 +8,7 @@
 .screenshots {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .screenshot {
@@ -21,4 +24,39 @@
 
 .game {
     margin: 1rem;
+}
+
+.imageDetails {
+    display:inline-block;
+  background: linear-gradient(to left, transparent, black 80%); /* W3C */
+  
+}
+
+.game-details {
+  position:relative;
+  z-index:-1;
+  display:block;
+  width: 100%;
+}
+
+.title {
+    position: absolute;
+    top: 4rem;
+    left: 1rem;
+    color: rgba(255, 255, 255, 0.918);
+    font-size: 28pt;
+    opacity: 0.8;
+    text-shadow: 3px 1px rgb(105, 104, 104);
+    font-family: 'Bebas Neue', cursive;
+    letter-spacing: 0.3rem;
+}
+
+.description {
+    position: absolute;
+    top: 10rem;
+    left: 1rem;
+    color: rgba(255, 255, 255, 0.808);
+    font-size: 12pt;
+    max-width: 20rem;
+    opacity: 0;
 }
