@@ -3,3 +3,11 @@
     display: flex;
     flex-direction: row;
 }
+
+.addLibrary {
+    margin-left: 4.75rem;
+}
+
+.game {
+    margin: 0rem 1rem 0rem 2rem;
+}

@@ -87,7 +87,7 @@ export const HomepageActivity = () => {
         if(activity.review === true) {
             return <>
             <div className="line-one">{activity?.user?.firstName} {activity?.user?.lastName} reviewed {activity.gameName}!</div>
-            <div className="line-two">{formattedDate} at {formattedTime}</div>
+            <div className="line-two">{formattedDate}</div>
             <button onClick={() => navigate(`/game/${activity.game}`)}>See Details</button>
             </>
         }
@@ -95,14 +95,14 @@ export const HomepageActivity = () => {
         else if(activity.library === true) {
             return <>
             <div className="line-one">{activity?.user?.firstName} {activity?.user?.lastName} added {activity.gameName} to their library!</div>
-            <div className="line-two">{formattedDate} at {formattedTime}</div>
+            <div className="line-two">{formattedDate}</div>
             </>
         }
 
         else if(activity.wishlist === true) {
             return <>
             <div className="line-one">{activity?.user?.firstName} {activity?.user?.lastName} added {activity.gameName} to their wishlist!</div>
-            <div className="line-two">{formattedDate} at {formattedTime}</div>
+            <div className="line-two">{formattedDate}</div>
             </>
         }
     }

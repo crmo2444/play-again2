@@ -56,7 +56,7 @@
 
 .imageDetails {
     display:inline-block;
-  background: linear-gradient(to left, transparent, black 80%); /* W3C */
+  background: linear-gradient(to left, transparent, rgba(0, 0, 0, 0.938) 80%); /* W3C */
   
 }
 

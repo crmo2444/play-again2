@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
+import { AddWishlistToLibrary } from "./AddWishlistToLibrary"
 import { WishlistGameDelete } from "./WishlistGameDelete"
 
 export const WishlistGame = ({game, setterGames, setterWishlist}) => {
@@ -23,5 +24,10 @@ export const WishlistGame = ({game, setterGames, setterWishlist}) => {
         </Link>
         <div>On {foundPlatform.name}</div>
         <WishlistGameDelete id={game.id} setEmpty={setterGames} setWishlist={setterWishlist} />
+        <AddWishlistToLibrary id={game.id} 
+        setEmpty={setterGames} 
+        setWishlist={setterWishlist} 
+        platform={foundPlatform.id} 
+        gameObj={game}/>
     </section> 
 }
