@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { LibraryGameDelete } from "./LibraryGameDelete"
 
 export const LibraryGame = ({game, setterGames, setterLibrary}) => {
     const [foundPlatform, setFoundPlatform] = useState({})
+
+    let navigate = useNavigate()
 
     useEffect(
         () => {
@@ -22,7 +24,6 @@ export const LibraryGame = ({game, setterGames, setterLibrary}) => {
         </Link>
         <div>On {foundPlatform.name}</div>
         <LibraryGameDelete id={game.id} setEmpty={setterGames} setLibrary={setterLibrary} />
-        <button>Add Review</button>
-        <button>Add Rating</button>
+        <button className="pageButton" onClick={() => navigate(`/game/${game?.gameObject?.id}`)}>Game Page</button>
     </section> 
 }

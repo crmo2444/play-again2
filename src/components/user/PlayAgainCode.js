@@ -152,7 +152,8 @@ export const PlayAgainCode = () => {
 
             for(let game of similarGames) {
                 let array = game?.results?.similar_games
-                array.map(arr => {
+                let newArray = array.slice(0, 2)
+                newArray.map(arr => {
                     console.log('game', arr)
                     similarGamesArray.push(arr)
                 })

@@ -10,7 +10,6 @@
 .screenshots {
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
 }
 
 .screenshot {
@@ -65,7 +64,8 @@
   position:relative;
   z-index:-1;
   display:block;
-  width: 100%;
+  width: 120rem;
+  height: 57rem;
 }
 
 .title {
@@ -80,14 +80,23 @@
     letter-spacing: 0.3rem;
 }
 
+.date {
+    position: absolute;
+    top: 9rem;
+    left: 1rem;
+    color: rgba(255, 255, 255, 0.918);
+    font-size: 12pt;
+    opacity: 0.8;
+}
+
 .description {
     position: absolute;
-    top: 10rem;
+    top: 11rem;
     left: 1rem;
     color: rgba(255, 255, 255, 0.808);
     font-size: 12pt;
     max-width: 20rem;
-    opacity: 0;
+    opacity: 0.5;
 }
 
 .pageNumber {

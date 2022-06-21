@@ -60,6 +60,7 @@ export const GameLibrary = () => {
             })
 
             setPlatforms(foundPlatforms)
+            setFiltered(currentUserLibrary)
         },
         [currentUserLibrary]
     )
