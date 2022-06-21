@@ -21,8 +21,6 @@ export const EditGameReview = ({reviewObject, game, setter, user}) => {
             review: review.review,
             rating: review.rating
         }
-                    
-        setButtonState(false)
 
         fetch(`http://localhost:8088/gameReviews/${reviewObject.id}`, {
             method: "PUT",
@@ -31,13 +29,16 @@ export const EditGameReview = ({reviewObject, game, setter, user}) => {
             },
             body: JSON.stringify(reviewToSendToAPI)
         })
-            .then(fetch(`http://localhost:8088/gameReviews/?_expand=user&game=${game}`)
+        .then(
+            () => {
+                fetch(`http://localhost:8088/gameReviews/?_expand=user&game=${game}`)
                 .then(response => response.json())
                 .then((data) => {
-                        setter(data)
+                    setter(data)
+                    setButtonState(false)
                 })
-            )
-
+            }
+        )
     }
 
     return <>

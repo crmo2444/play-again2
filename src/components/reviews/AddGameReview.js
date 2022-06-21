@@ -32,10 +32,16 @@ export const AddGameReview = ({user, game, setter}) => {
                 },
                 body: JSON.stringify(reviewToSendToAPI)
             })
-                .then(response => response.json())
-                .then((data) => {
-                    setter(data)
-                })
+            .then(
+                () => {
+                    fetch(`http://localhost:8088/gameReviews/?_expand=user&game=${game}`)
+                    .then(response => response.json())
+                    .then((data) => {
+                        setter(data)
+                        setButtonState(false)
+                    })
+                }
+            )
         }
     
         return <>
