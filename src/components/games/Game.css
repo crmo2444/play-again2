@@ -115,3 +115,12 @@
 .newGamesButton {
     width: 8rem;
 }
+
+.profilePic {
+    width: 5rem;
+    height: 5rem;
+}
+
+.review {
+    margin: 1rem;
+}

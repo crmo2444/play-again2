@@ -24,6 +24,6 @@ export const LibraryGame = ({game, setterGames, setterLibrary}) => {
         </Link>
         <div>On {foundPlatform.name}</div>
         <LibraryGameDelete id={game.id} setEmpty={setterGames} setLibrary={setterLibrary} />
-        <button className="pageButton" onClick={() => navigate(`/game/${game?.gameObject?.id}`)}>Game Page</button>
+        <button className="pageButton" onClick={() => navigate(`/game/${game?.gameObject?.id}`)}>Details</button>
     </section> 
 }

@@ -2,6 +2,9 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { keys } from "../../Settings"
+import { AddGameReview } from "../reviews/AddGameReview"
+import { DeleteGameReview } from "../reviews/DeleteGameReview"
+import { EditGameReview } from "../reviews/EditGameReview"
 
 export const GameDetails = () => {
     const {gameId} = useParams()
@@ -15,6 +18,11 @@ export const GameDetails = () => {
     const [themes, setThemes] = useState([])
     const [gamePlatforms, setGamePlatforms] = useState([])
     const [screenshots, setScreenshots] = useState([])
+    const [gameReviews, setGameReviews] = useState([])
+    const [noReviews, setNoReviews] = useState(false)
+
+    const localUser = localStorage.getItem("current_user")
+    const localUserObject = JSON.parse(localUser)
 
     useEffect(
         () => {
@@ -30,6 +38,17 @@ export const GameDetails = () => {
                     setGamePlatforms(details.platforms)
                     setThemes(details.themes)
                 })
+
+            fetch(`http://localhost:8088/gameReviews/?_expand=user&game=${gameId}`)
+                .then(response=>response.json())
+                .then((data) => {
+                    if(data.length === 0) {
+                        setNoReviews(true)
+                    }
+                    else {
+                        setGameReviews(data)
+                    }
+                })    
         },
         []
     )
@@ -79,6 +98,15 @@ export const GameDetails = () => {
         }
     }
 
+    const currentUserReviews = (review) => {
+        if(localUserObject.id === review.userId) {
+            return <>
+            <EditGameReview reviewObject={review} game={parseInt(gameId)} setter={setGameReviews} user={localUserObject.id}/>
+            <DeleteGameReview id={review.id} game={parseInt(gameId)} setter={setGameReviews}/>
+            </>
+        }
+    }
+
     let count = 0
 
     return <>
@@ -113,5 +141,26 @@ export const GameDetails = () => {
                 }
             })}
         </section>
+        {noReviews ? <>
+        <h3>All Reviews</h3>
+        <div>No reviews yet!</div> 
+        <br></br>
+        <AddGameReview user={localUserObject.id} game={parseInt(gameId)} setter={setGameReviews}/>
+        </> : <>
+            <AddGameReview user={localUserObject.id} game={parseInt(gameId)} setter={setGameReviews}/>
+        <br></br>
+        <section className="reviews">
+            <h3>All Reviews</h3>
+            {gameReviews.map(review => {
+                return <section className="review">
+                            <div><img className="profilePic" src={review?.user?.profilePicture} /></div>
+                            <div>{review.review}</div>
+                            <div>{review.rating}</div>
+                            <div>Review by {review?.user?.firstName} {review?.user?.lastName}</div>
+                            {currentUserReviews(review)}
+                    </section>
+            })}
+        </section>
+        </>}
         </>
 }

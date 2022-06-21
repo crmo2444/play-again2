@@ -1,18 +1,23 @@
 import { useEffect, useState } from "react"
 import { Slide } from "react-slideshow-image"
 import 'react-slideshow-image/dist/styles.css'
+import { HomepageFeatured } from "./HomepageFeatured"
 import { HomepageLibrary } from "./HomepageLibrary"
+import "./Homepage.css"
+import { useNavigate } from "react-router-dom"
 
 export const Homepage = () => {
-    const [allGames, setAllGames] = useState([])
+    const [featuredGames, setFeatured] = useState([])
     const [gameImages, setGameImages] = useState([])
+
+    let navigate = useNavigate()
 
     useEffect(
         () => {
-            fetch(`http://localhost:8089/games`)
+            fetch(`http://localhost:8088/featuredGames`)
                 .then(response=>response.json())
                 .then((data) => {
-                    setAllGames(data)
+                    setFeatured(data)
                 })
         },
         []
@@ -22,15 +27,21 @@ export const Homepage = () => {
         () => {
             let allImages = []
 
-            allGames.map(game => {
-                allImages.push(game.background_image)
+            featuredGames.map(game => {
+                allImages.push({
+                    image: game?.image?.original_url,
+                    id: game.id
+                })
             })
 
             setGameImages(allImages)
         },
-        [allGames]
+        [featuredGames]
     )
 
-    return <HomepageLibrary />
+    return <section className="homepage">
+        <HomepageFeatured gameImages={gameImages}/>
+        <button className="playAgain" onClick={() => navigate("/play-again")}>Ready to Play Again?</button>
+        </section>
 
 }

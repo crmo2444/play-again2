@@ -165,7 +165,7 @@ export const PlayAgainCode = () => {
     )
 
     return <>
-    <div>Don't see all your games? Click <Link to="/search">here</Link> to add more!</div>
+    <h1>Play Again</h1>
     <ul>
     {userLibraryGames ? <>
         {userLibraryGames.map(game => {
