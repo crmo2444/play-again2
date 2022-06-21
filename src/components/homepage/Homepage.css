@@ -3,3 +3,17 @@
     display: flex;
     margin-left: 56rem;
 }
+
+.recentActivity {
+    display: flex;
+    flex-direction: column;
+    margin: 1rem;
+}
+
+.activity {
+    margin-bottom: 1rem;
+}
+
+.line-one {
+    color: rgb(32, 86, 204)
+}

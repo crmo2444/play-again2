@@ -75,24 +75,6 @@ export const GameSearch = () => {
         },
         [page, searchResultsNumber]
     )
-    /* useEffect(
-        () => {
-            const searchedGames = games.filter(game => 
-                game.name.toLowerCase().startsWith(searchTerms.toLowerCase()))
-            setSearchResults(searchedGames)
-        },
-        [searchTerms]
-    )
- */
-    const randomGames = () => {
-        let random = Math.floor(Math.random() * 80874)
-            fetch(`/games/?api_key=${keys.giantBombKey}&format=json&field_list=id,name,platforms,deck,image&offset=${random}&limit=10`)
-                .then(response=>response.json())
-                .then((data) => {
-                    let array = data.results
-                    setGames(array)
-                })
-    }
 
     const searchGames = (value) => {
         fetch(`/search/?api_key=${keys.giantBombKey}&format=json&query=${searchTerms}&resources=game`)
@@ -112,19 +94,9 @@ export const GameSearch = () => {
                     setSearchResults(array)
                 })
     }
-    /* const findSteam = () => {
-        fetch(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=87A9DEACDB46DA8B2A3D84B9046534EC&steamids=76561198319765295`)
-                .then(response=>response.json())
-                .then((data) => {
-                    setSteamUser(data)
-                })
-        console.log('test')
-    } */
 
     return (
         <div>
-{/*             <button onClick={(event) => findSteam(event)}>Find Steam</button> */}
-{/*             <button onClick={(event) => findGame(event)}>Test</button> */}
             <div>Input Title or Keyword</div>
             <input 
                 type="text" 
@@ -133,8 +105,14 @@ export const GameSearch = () => {
                     (changeEvent) => {
                         let search = changeEvent.target.value
                         setSearchTerms(search)
-                    }   
-                }/>
+                    }
+                }
+                onKeyPress={(event) => {
+                   if(event.key === 'Enter') {
+                        searchGames(searchTerms, 1)
+                   } 
+                }}
+                />
             <button onClick={() => searchGames(searchTerms, 1)}>Search</button>
 
             {searchResults.length !== 0 ? <>

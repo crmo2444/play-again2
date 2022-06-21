@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom"
+import { addToGameLibrary, addToGameWishlist, setLibraryGames, setWishlistGames } from "../../FetchRequests";
 
 export const Game = ({gameObject}) => {
     const [feedback, setFeedback] = useState("")
@@ -15,18 +16,8 @@ export const Game = ({gameObject}) => {
 
     useEffect(
         () => {
-            fetch(`http://localhost:8088/libraryGames`)
-                .then(response=>response.json())
-                .then((data) => {
-                    setLibrary(data)
-                })
-
-            fetch(`http://localhost:8088/wishlistGames`)
-                .then(response=>response.json())
-                .then((data) => {
-                    setWishlist(data)
-                })
-
+            setLibraryGames(setLibrary)
+            setWishlistGames(setWishlist)
             setPlatforms(gameObject?.platforms)
         },
         []
@@ -43,7 +34,7 @@ export const Game = ({gameObject}) => {
         let foundGame = false
 
         library.map(game => {
-            if (game?.gameObject?.id === gameObject.id && game.platform === chosenConsole) {
+            if (game?.gameObject?.id === gameObject.id && game.platform === chosenConsole && game.userId === localUserObject.id) {
                 foundGame = true
             }
         })
@@ -64,24 +55,19 @@ export const Game = ({gameObject}) => {
 
     const addToLibrary = (platform) => {
 
-            const newGame = {
-                userId: localUserObject.id,
-                gameObject: gameObject,
-                platform: chosenConsole
-            }
+        const d = new Date();
+        let date = d.toISOString()
+
+        console.log(platform)
+        const newGame = {
+            userId: localUserObject.id,
+            gameObject: gameObject,
+            platform: chosenConsole,
+            date: date
+        }
     
         // TODO: Perform the fetch() to POST the object to the API
-        fetch('http://localhost:8088/libraryGames', {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(newGame)
-        })
-            .then(response => response.json())
-            .then(() => {
-                setFeedback("Added to Library!")
-            })
+        addToGameLibrary(newGame, setFeedback)
     }
 
     const checkWishlist = () => {
@@ -89,7 +75,7 @@ export const Game = ({gameObject}) => {
         let foundGame = false
 
         wishlist.map(game => {
-            if (game.gameId === gameObject.id && game.platform === chosenConsole) {
+            if (game.gameId === gameObject.id && game.platform === chosenConsole && game.userId === localUserObject.id) {
                 foundGame = true
             }
         })
@@ -109,25 +95,19 @@ export const Game = ({gameObject}) => {
 
     const addToWishlist = (platform) => {
 
+        const d = new Date();
+        let date = d.toISOString()
+
         console.log(platform)
         const newGame = {
             userId: localUserObject.id,
             gameObject: gameObject,
-            platform: chosenConsole
+            platform: chosenConsole,
+            date: date
         }
 
     // TODO: Perform the fetch() to POST the object to the API
-    fetch('http://localhost:8088/wishlistGames', {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(newGame)
-    })
-        .then(response => response.json())
-        .then(() => {
-            setFeedback("Added to Wishlist!")
-        })
+        addToGameWishlist(newGame, setFeedback)
     }
 
     return <section className="game">

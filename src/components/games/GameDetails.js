@@ -1,6 +1,7 @@
 
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
+import { setAllGameReviews } from "../../FetchRequests"
 import { keys } from "../../Settings"
 import { AddGameReview } from "../reviews/AddGameReview"
 import { DeleteGameReview } from "../reviews/DeleteGameReview"
@@ -39,16 +40,7 @@ export const GameDetails = () => {
                     setThemes(details.themes)
                 })
 
-            fetch(`http://localhost:8088/gameReviews/?_expand=user&game=${gameId}`)
-                .then(response=>response.json())
-                .then((data) => {
-                    if(data.length === 0) {
-                        setNoReviews(true)
-                    }
-                    else {
-                        setGameReviews(data)
-                    }
-                })    
+            setAllGameReviews(gameId, setNoReviews, setGameReviews)
         },
         []
     )
@@ -145,9 +137,18 @@ export const GameDetails = () => {
         <h3>All Reviews</h3>
         <div>No reviews yet!</div> 
         <br></br>
-        <AddGameReview user={localUserObject.id} game={parseInt(gameId)} setter={setGameReviews}/>
+        <AddGameReview user={localUserObject.id} 
+        game={parseInt(gameId)} 
+        gameName={currentGame.name}
+        setter={setGameReviews} 
+        setNoReviews={setNoReviews}/>
         </> : <>
-            <AddGameReview user={localUserObject.id} game={parseInt(gameId)} setter={setGameReviews}/>
+            <AddGameReview
+            user={localUserObject.id} 
+            game={parseInt(gameId)} 
+            setter={setGameReviews} 
+            setNoReviews={setNoReviews}
+            gameName={currentGame.name}/>
         <br></br>
         <section className="reviews">
             <h3>All Reviews</h3>

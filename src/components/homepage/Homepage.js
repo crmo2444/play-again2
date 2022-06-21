@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react"
-import { Slide } from "react-slideshow-image"
-import 'react-slideshow-image/dist/styles.css'
 import { HomepageFeatured } from "./HomepageFeatured"
-import { HomepageLibrary } from "./HomepageLibrary"
+import { HomepageActivity } from "./HomepageActivity"
 import "./Homepage.css"
 import { useNavigate } from "react-router-dom"
 
@@ -42,6 +40,8 @@ export const Homepage = () => {
     return <section className="homepage">
         <HomepageFeatured gameImages={gameImages}/>
         <button className="playAgain" onClick={() => navigate("/play-again")}>Ready to Play Again?</button>
+
+        <HomepageActivity />
         </section>
 
 }

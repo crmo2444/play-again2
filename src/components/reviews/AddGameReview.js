@@ -1,12 +1,14 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 
-export const AddGameReview = ({user, game, setter}) => {
+export const AddGameReview = ({user, game, setter, setNoReviews, gameName}) => {
         const [review, update] = useState({
             userId: user,
             game: game,
             review: "",
             rating: 0,
+            date: "",
+            gameName: gameName
         })
         const [buttonState, setButtonState] = useState(false)
 
@@ -17,12 +19,19 @@ export const AddGameReview = ({user, game, setter}) => {
     
         const handleSaveButtonClick = (event) => {
             event.preventDefault()
+
+            
+
+            const d = new Date();
+            let date = d.toISOString()
     
             let reviewToSendToAPI = {
                 userId: user,
                 game: game,
                 review: review.review,
-                rating: review.rating
+                rating: review.rating,
+                date: date,
+                gameName: gameName
             }
     
             fetch(`http://localhost:8088/gameReviews/?_expand=user&game=${game}`, {
@@ -38,6 +47,7 @@ export const AddGameReview = ({user, game, setter}) => {
                     .then(response => response.json())
                     .then((data) => {
                         setter(data)
+                        setNoReviews(false)
                         setButtonState(false)
                     })
                 }
