@@ -1,5 +1,12 @@
 
 .gameLibrary {
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-rows: 21rem 21rem; /* 2 rows of 50px */
+    grid-auto-flow: column;  /* a column flow */
+    grid-auto-columns: 18rem; /* each column will 100px of width */
+    grid-gap: 3rem;
+    overflow: auto;
+    width: 100vw;
+    height: 100vh;
 }
+

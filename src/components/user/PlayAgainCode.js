@@ -1,6 +1,9 @@
+import { set } from "mithril/route"
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
+import { keys } from "../../Settings"
 import "./PlayAgainCode.css"
+import { PlayAgainResults } from "./PlayAgainResults"
 
 export const PlayAgainCode = () => {
     //match game tags of selected games with random game tag
@@ -8,12 +11,12 @@ export const PlayAgainCode = () => {
     //find game with most similar count of id tags
 
     const [userLibraryGames, setUserLibraryGames] = useState([])
-    const [allGames, setAllGames] = useState([])
     const [userPicks, setUserPicks] = useState([])
     const [selectState, setSelectState] = useState(false)
-    const [allLibraryGameNames, setAllNames] = useState([])
-    const [userPickDetails, setUserPickDetails] = useState([])
-    const [pickTags, setPickTags] = useState([])
+    const [allLibraryIds, setAllIds] = useState([])
+    const [similarGames, setSimilarGames] = useState([])
+    const [similarURLs, setSimilarURLs] = useState(false)
+    const [similarGameObject, setSimilarGameObjects] = useState([])
 
     const localUser = localStorage.getItem("current_user")
     const localUserObject = JSON.parse(localUser)
@@ -27,60 +30,53 @@ export const PlayAgainCode = () => {
                         setUserLibraryGames(data)
                     }
                 })
-
-            fetch(`http://localhost:8089/games`)
-                .then(response=>response.json())
-                .then((data) => {
-                    setAllGames(data)
-                })
         },
         []
     )
 
     useEffect(
         () => {
-            let nameArray = []
+            let array = []
 
             userLibraryGames.map(game => {
-                nameArray.push(game.gameName)
+                array.push(game?.gameObject?.id)
             })
 
-            setAllNames(nameArray)
+            setAllIds(array)
         },
         [userLibraryGames]
     )
 
     useEffect(
         () => {
-            let gameDetails = []
+            let pickURLs = []
 
-            if(userPicks.length !== 0) {
-                allGames.map(game => {
-                    userPicks.map(pick => {
-                        if(game.name === pick) {
-                            gameDetails.push(game)
-                        }
-                    })
+            if (userPicks.length !== 0) {
+                userPicks.map(pick => {
+                    pickURLs.push(`/game/3030-${pick}/?api_key=${keys.giantBombKey}&format=json&field_list=similar_games`)
                 })
+
+                setSimilarURLs(pickURLs)
             }
 
-            setUserPickDetails(gameDetails)
         },
         [userPicks]
     )
 
     useEffect(
         () => {
-            let tags = []
-
-            userPickDetails.map(pickDetails => {
-                tags.push(pickDetails.tags)
-            })
-
-            setPickTags(tags)
+            fetchSimilar()
         },
-        [userPickDetails]
+        [similarURLs]
     )
+
+    const fetchSimilar = async () => {
+        const response = await Promise.all(
+          similarURLs.map((url) => fetch(url).then(res => res.json()))
+        )
+        const fetchedGames = [].concat.apply([], response);
+        setSimilarGames(fetchedGames);
+      }
 
     const selectAll = (boolean) => {  
         let element = document.getElementsByName('gameCheck')
@@ -119,22 +115,6 @@ export const PlayAgainCode = () => {
         return picks
     }
 
-    let gameArr = []
-
-    /* const sendSeparatePicks = (array) => {
-        if(array.length !== 0) {
-            (allGames.map(game => {
-                array.map(arr => {
-                    if(game.name === arr) {
-                        gameArr.push(game)
-                    }
-                })
-            }))
-            setUserPickDetails(gameArr)
-        }
-
-    } */
-
     let gameArray = []
     
     const handleAllChecks = (value) => {  
@@ -153,22 +133,51 @@ export const PlayAgainCode = () => {
 
     }
 
+    useEffect(
+        () => {
+            if(similarURLs === true) {
+                let array = [...similarGames]
+        
+                for (let i = 0; i < array.length; i++) {
+                    console.log(array[i])
+                }
+            }
+        },
+        [similarURLs]
+    )
+
+    useEffect(
+        () => {
+            let similarGamesArray = []
+
+            for(let game of similarGames) {
+                let array = game?.results?.similar_games
+                array.map(arr => {
+                    console.log('game', arr)
+                    similarGamesArray.push(arr)
+                })
+            }
+
+            setSimilarGameObjects(similarGamesArray)
+        },
+        [similarGames]
+    )
+
     return <>
     <div>Don't see all your games? Click <Link to="/search">here</Link> to add more!</div>
     <ul>
     {userLibraryGames ? <>
         {userLibraryGames.map(game => {
             return <li>
-                <div>{game.gameName}</div>
                 <input type="checkbox"
-                 id={`${game.id}`} 
-                 value={`${game.gameName}`}
+                 id={`${game?.gameObject?.id}`} 
+                 value={`${game?.gameObject?.name}`}
                  name="gameCheck"
                  onChange={(event) => {
-                     const gameValue = event.target.value
+                     const gameValue = parseInt(event.target.id)
                      handleSeparateCheck(gameValue)
                  }}/>
-                <label htmlFor={`${game.id}`}><img className="gameImage" src={game.image}/></label>
+                <label htmlFor={`${game?.gameObject?.id}`}><img className="gameImage" src={game?.gameObject?.image?.original_url} alt={`${game?.gameObject?.name}`}/></label>
                 </li> })}
         {selectState ? 
         <><button onClick={() => 
@@ -179,11 +188,22 @@ export const PlayAgainCode = () => {
             <><button onClick={() => 
             {selectAll(true)
             setSelectState(true)
-            handleAllChecks(allLibraryGameNames)}}>Select All</button>
+            handleAllChecks(allLibraryIds)}}>Select All</button>
             <button onClick={() => {
                 setUserPicks(picks)
             }}>Play Again!</button></>}
         </> : <div>No games in library.</div>}
+
+    </ul>
+    <ul>
+        {similarGames.length !== 0 ? <>
+        <h3>Results</h3>
+        <section className="allResults">
+        {similarGameObject.map(game => {
+            return <PlayAgainResults key={`game--${game.id}`} id={game.id} />
+        })}
+        </section>
+        </> : null}
     </ul>
     </>
 }

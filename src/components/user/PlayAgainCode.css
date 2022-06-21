@@ -55,3 +55,9 @@ ul {
     box-shadow: 0 0 5px #333;
     z-index: -1;
   }
+
+  .allResults {
+      display: flex;
+      flex-direction: row;
+
+  }

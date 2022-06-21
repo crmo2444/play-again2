@@ -17,11 +17,12 @@ export const LibraryGame = ({game, setterGames, setterLibrary}) => {
     )
 
     return <section className="game">
-        <div>{game?.gameObject?.name}</div>
         <Link to={`/game/${game?.gameObject?.id}`}>
-        <img className="gameImage" src={game?.gameObject?.image?.original_url}/>
+        <img className="gameImage" src={game?.gameObject?.image?.original_url} alt={game?.gameObject?.name} title={game?.gameObject?.name}/>
         </Link>
         <div>On {foundPlatform.name}</div>
         <LibraryGameDelete id={game.id} setEmpty={setterGames} setLibrary={setterLibrary} />
+        <button>Add Review</button>
+        <button>Add Rating</button>
     </section> 
 }

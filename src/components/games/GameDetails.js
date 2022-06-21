@@ -5,90 +5,83 @@ import { keys } from "../../Settings"
 
 export const GameDetails = () => {
     const {gameId} = useParams()
-    const [games, setGames] = useState([])
     const [currentGame, setCurrent] = useState([])
-    const [gamePlatforms, setPlatforms] = useState([])
-    const [gameDescription, setDescription] = useState([])
-    const [gameScreenshots, setScreenshots] = useState([])
-    const [gameGenres, setGenres] = useState([])
-    const [hasDetails, setHasDetails] = useState(true)
+    const [videos, setVideos] = useState([])
+    const [trailer, setTrailer] = useState([])
+    const [trailerURL, setTrailerURL] = useState([])
+    const [formattedName, setFormattedName] = useState("")
+    const [backgroundPic, setBackgroundPic] = useState("")
 
     useEffect(
         () => {
-            fetch(`http://localhost:8089/games`)
-            .then(response=>response.json())
-            .then((data) => {
-                setGames(data)
-            })
 
-            fetch(`http://localhost:8088/gameDetails?id=${gameId}`)
-            .then(response=>response.json())
-            .then((data) => {
-                if(data.length !== 0) {
-                    let singleGame = data[0]
-                    setDescription(singleGame)
-                }
-                else {
-                    setHasDetails(false)
-                }
-            })
+            fetch(`/game/3030-${gameId}/?api_key=${keys.giantBombKey}&format=json`)
+                .then(response=>response.json())
+                .then((data) => {
+                    let details = data.results
+                    setCurrent(details)
+                    setVideos(details.videos)
+                    setFormattedName(details.name.replace(/ /g,"+"))
+                })
         },
         []
     )
 
     useEffect(
         () => {
-            
-            games.map(game => {
-                if(parseInt(game.id)===parseInt(gameId)) {
-                    setCurrent(game)
-                }
-            })
-
+            fetch(`https://api.rawg.io/api/games?key=${keys.RAWG}&search=${formattedName}`)
+            .then(response=>response.json())
+                .then((data) => {
+                    let details = data?.results[0]?.background_image
+                    setBackgroundPic(details)
+                })
         },
-        [games]
+        [formattedName]
     )
 
     useEffect(
         () => {
-            if(currentGame) {
-                setPlatforms(currentGame?.platforms)
-                setScreenshots(currentGame?.short_screenshots)
-                setGenres(currentGame?.genres)
+            let foundVideo 
+
+            if (videos.length !== 0) {
+                foundVideo = videos.find(video => video.name.includes('Trailer') || video.name.includes('trailer'))
             }
+
+            setTrailer(foundVideo)
         },
-        [currentGame]
+        [videos]
     )
 
+    const trailerVid = () => {
+        if(typeof trailer !== 'undefined') {
+            let string = trailer.api_detail_url
+            let split = string.split("i/")
+            let secondHalf = split[1]
+
+            fetch(`/${secondHalf}?api_key=${keys.giantBombKey}&format=json`)
+                .then(response=>response.json())
+                .then((data) => {
+                    setTrailerURL(data)
+                })
+        }
+
+        else {
+            console.log('hi')
+        }
+    }
+
     return <>
-    {hasDetails ? <>
-        <h3 className="title">{currentGame.name}</h3>
-        <div className="imageDetails" 
-        /* onMouseOver={event => event.target.play()} 
-        src={`${vid.videos.tiny.url}#t=1`} */><img className="game-details" src={currentGame.background_image}/></div>
+         <h3 className="title">{currentGame.name}</h3>
+        <div className="imageDetails">
+        <img className="gamePhoto" src={backgroundPic}/></div>
+        {/* trailer ? <>{trailerVid()}</> : null} */}
         <div>Available on: </div>
-        {gamePlatforms ? <>
-        {gamePlatforms.map(gamePlatform => {
-            return <div>{gamePlatform.platform.name}</div>
-        })}
-        </> : null}
+
         <br></br>
         <div>Genres: </div>
-        {gameGenres ? <>
-        {gameGenres.map(genre => {
-            return <div>{genre.name}</div>
-        })}
-        </> : null}
         <br></br>
-        <div className="description">{gameDescription.description}</div>
+        <div className="description">{currentGame.deck}</div>
         <section className="screenshots">
-            {gameScreenshots ? <>
-                {gameScreenshots.map(screenshot => {
-                    if(screenshot.id !== -1) {
-                        return <img className="screenshot" src={screenshot.image}/>
-                    }
-            })}</> : null }
         </section>
-        </> : <div>No details yet!</div>}
-    </>
+        </>
 }
