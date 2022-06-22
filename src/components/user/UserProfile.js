@@ -73,8 +73,12 @@ export const UserProfile = () => {
     }
 
     return <section className="profileDetails">
-        <div>{user.firstName} {user.lastName}</div>
-        <div className="profilePicture"><img className="picture" src={user.profilePicture} alt="profile-picture"/></div>
+        <section className="profileName">
+            <div>{user.firstName} {user.lastName}</div>
+        </section>
+        <section className="profilePicture">
+            <img className="picture" src={user.profilePicture} alt="profile-picture"/>
+        </section>
         {showSettings()}
     </section>
 }
