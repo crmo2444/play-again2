@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { getAllReviews, setLibraryGames, setWishlistGames } from "../../FetchRequests"
 
 export const HomepageActivity = () => {
@@ -86,7 +86,7 @@ export const HomepageActivity = () => {
 
         if(activity.review === true) {
             return <>
-            <div className="line-one">{activity?.user?.firstName} {activity?.user?.lastName} reviewed {activity.gameName}!</div>
+            <div className="line-one"><Link to={`/profile/${activity?.user?.id}`}>{activity?.user?.firstName} {activity?.user?.lastName}</Link> reviewed {activity.gameName}!</div>
             <div className="line-two">{formattedDate}</div>
             <button onClick={() => navigate(`/game/${activity.game}`)}>See Details</button>
             </>

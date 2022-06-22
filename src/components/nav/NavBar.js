@@ -25,7 +25,7 @@ export const NavBar = () => {
                 <Link className="navbar__link" to="/play-again">Play Again!</Link>
             </li>
             <li className="navbar__item active">
-                <Link className="navbar__link" to="/profile">Profile</Link>
+                <Link className="navbar__link" to={`/profile/${localUserObject.id}`}>Profile</Link>
             </li>
 
             {

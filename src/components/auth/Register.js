@@ -8,7 +8,7 @@ export const Register = (props) => {
         firstName: "",
         lastName: "",
         password: "",
-        profilePicture: "https://www.tenforums.com/geek/gars/images/2/types/thumb_15951118880user.png",
+        profilePicture: "https://i.pinimg.com/custom_covers/222x/85498161615209203_1636332751.jpg",
         bio: "I'm new, say hello!"
     })
     let navigate = useNavigate()

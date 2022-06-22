@@ -24,7 +24,7 @@ export const ApplicationViews = () => {
             <Route path="wishlist" element={ <GameWishlist /> } />
             <Route path="play-again" element={ <PlayAgainCode /> } />
             <Route path="/" element={ <Homepage /> } />
-            <Route path="profile" element={ <UserProfile /> } />
+            <Route path="profile/:userId" element={ <UserProfile /> } />
             
 
             </Route>
