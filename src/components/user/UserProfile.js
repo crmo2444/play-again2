@@ -11,6 +11,7 @@ export const UserProfile = () => {
     const [currentUser, setCurrentUser] = useState({})
     const [edit, setEdit] = useState(false)
     const {userId} = useParams()
+    const [user, setUser] = useState({})
 
     const localUser = localStorage.getItem("current_user")
     const localUserObject = JSON.parse(localUser)
@@ -21,8 +22,15 @@ export const UserProfile = () => {
                 .then(response=>response.json())
                 .then((data) => {
                     let singleUser = data[0]
-                    setCurrentUser(singleUser)
+                    setUser(singleUser)
                 })
+
+            fetch(`http://localhost:8088/users?id=${localUserObject.id}`)
+                .then(response=>response.json())
+                .then((data) => {
+                    let singleUser = data[0]
+                    setCurrentUser(singleUser)
+                })  
         },
         []
     )
@@ -56,8 +64,8 @@ export const UserProfile = () => {
                 <section className="userProfile">
                     <div><EditBio id={userId} isUser={false}/></div>
                     <Friends 
-                    currentUserId={localUserObject.id}
-                    otherUserId={parseInt(userId)} />
+                    currentUserObj={currentUser}
+                    otherUserObj={user} />
                 </section>
             </>
         }
@@ -65,8 +73,8 @@ export const UserProfile = () => {
     }
 
     return <section className="profileDetails">
-        <div>{currentUser.firstName} {currentUser.lastName}</div>
-        <div className="profilePicture"><img className="picture" src={currentUser.profilePicture} alt="profile-picture"/></div>
+        <div>{user.firstName} {user.lastName}</div>
+        <div className="profilePicture"><img className="picture" src={user.profilePicture} alt="profile-picture"/></div>
         {showSettings()}
     </section>
 }
