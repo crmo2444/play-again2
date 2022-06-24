@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { WishlistGame } from "./WishlistGame"
 import "./Wishlist.css"
 
@@ -11,6 +11,8 @@ export const GameWishlist = () => {
 
     const localUser = localStorage.getItem("current_user")
     const localUserObject = JSON.parse(localUser)
+
+    let navigate = useNavigate()
 
     useEffect(
         () => {
@@ -36,7 +38,10 @@ export const GameWishlist = () => {
     )
 
     return <>
-    <h2>{currentUser.firstName}'s Wishlist</h2>
+    <section className="header">
+            <h1 className="logo" onClick={() => navigate("/")}>Play Again</h1>
+            <h1 className="headerTitle">{currentUser.firstName}'s Wishlist</h1>
+        </section>
     <section className="gameWishlist">
         {hasGames === true ? <>
         {currentUserWishlist.map(game => {

@@ -44,9 +44,9 @@ export const Homepage = () => {
     )
 
     return <section className="homepage">
-        <section className="homepageHeader">
-        <h1 className="homepageLogo">Play Again</h1>
-        <h1 className="homepageTitle">Featured Games</h1>
+        <section className="header">
+        <h1 className="logo" onClick={() => navigate("/")}>Play Again</h1>
+        <h1 className="headerTitle">Featured Games</h1>
         </section>
         <HomepageFeatured gameImages={gameImages}/>
         <HomepageActivity />

@@ -14,7 +14,8 @@ export const GameSearch = () => {
     const [buttonArray, setButtonArray] = useState([])
     const [page, setPage] = useState(1)
     const [resultsString, setResultsString] = useState("")
-/*     const [steamUser, setSteamUser] = useState([]) */
+
+    let navigate = useNavigate()
 
     useEffect(
         () => {
@@ -95,7 +96,11 @@ export const GameSearch = () => {
                 })
     }
 
-    return (
+    return <section className="searchPage">
+        <section className="header">
+            <h1 className="logo" onClick={() => navigate("/")}>Play Again</h1>
+            <h1 className="headerTitle">Find Games</h1>
+        </section>
         <div>
             <div>Input Title or Keyword</div>
             <input 
@@ -136,5 +141,5 @@ export const GameSearch = () => {
             <div>Nothing to see here</div>
             </>}
         </div>
-    )
+        </section>
 }

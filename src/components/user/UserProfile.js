@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { keys } from "../../Settings"
 import { Friends } from "../friends/Friends"
 import { EditBio } from "./EditBio"
@@ -15,6 +15,8 @@ export const UserProfile = () => {
 
     const localUser = localStorage.getItem("current_user")
     const localUserObject = JSON.parse(localUser)
+
+    let navigate = useNavigate()
 
     useEffect(
         () => {
@@ -72,7 +74,12 @@ export const UserProfile = () => {
         
     }
 
-    return <section className="profileDetails">
+    return <>
+    <section className="header">
+        <h1 className="logo" onClick={() => navigate("/")}>Play Again</h1>
+        <h1 className="headerTitle">{user.firstName}'s Profile</h1>
+    </section>
+    <section className="profileDetails">
         <section className="profileName">
             <div>{user.firstName} {user.lastName}</div>
         </section>
@@ -81,4 +88,5 @@ export const UserProfile = () => {
         </section>
         {showSettings()}
     </section>
+    </>
 }

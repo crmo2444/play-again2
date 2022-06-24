@@ -1,6 +1,6 @@
 import { set } from "mithril/route"
 import { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { keys } from "../../Settings"
 import "./PlayAgainCode.css"
 import { PlayAgainResults } from "./PlayAgainResults"
@@ -20,6 +20,8 @@ export const PlayAgainCode = () => {
 
     const localUser = localStorage.getItem("current_user")
     const localUserObject = JSON.parse(localUser)
+
+    let navigate = useNavigate()
 
     useEffect(
         () => {
@@ -165,7 +167,10 @@ export const PlayAgainCode = () => {
     )
 
     return <>
-    <h1>Play Again</h1>
+    <section className="header">
+            <h1 className="logo" onClick={() => navigate("/")}>Play Again</h1>
+            <h1 className="headerTitle">Play Again!</h1>
+        </section>
     <ul>
     {userLibraryGames ? <>
         {userLibraryGames.map(game => {

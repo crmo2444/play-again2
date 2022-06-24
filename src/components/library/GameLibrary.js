@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { LibraryGame } from "./LibraryGame"
 import "./Library.css"
 import { keys } from "../../Settings"
@@ -15,6 +15,8 @@ export const GameLibrary = () => {
 
     const localUser = localStorage.getItem("current_user")
     const localUserObject = JSON.parse(localUser)
+
+    let navigate = useNavigate()
 
     useEffect(
         () => {
@@ -83,7 +85,10 @@ export const GameLibrary = () => {
     let count = 0
 
     return <>
-    <h2>{currentUser.firstName}'s Game Library</h2>
+    <section className="header">
+            <h1 className="logo" onClick={() => navigate("/")}>Play Again</h1>
+            <h1 className="headerTitle">{currentUser.firstName}'s Game Library</h1>
+        </section>
     <select onChange={(event) => {
                             let chosenPlatform = event.target.value
                             setChosen(parseInt(chosenPlatform))

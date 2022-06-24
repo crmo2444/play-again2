@@ -43,9 +43,6 @@ export const NavBar = () => {
                 <div>Hello {user.firstName}!</div>
             </li>
             <li className="navbar__item active">
-                <Link className="navbar__link" to="/">Homepage/Logo</Link>
-            </li>
-            <li className="navbar__item active">
                 <Link className="navbar__link" to="/search">Find Games</Link>
             </li>
             <li className="navbar__item active">

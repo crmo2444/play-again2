@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { AddFriend } from "../friends/AddFriend"
 
 export const NotificationList = () => {
@@ -9,6 +9,8 @@ export const NotificationList = () => {
     const [currentUser, setCurrentUser] = useState({})
     const [allUserNotifications, setAllUserNotifications] = useState([])
     const [hasNotifications, setHasNotifications] = useState(true)
+
+    let navigate = useNavigate()
 
     useEffect(
         () => {
@@ -34,7 +36,10 @@ export const NotificationList = () => {
     )
 
     return <>
-    <h1>Notifications</h1>
+    <section className="header">
+            <h1 className="logo" onClick={() => navigate("/")}>Play Again</h1>
+            <h1 className="headerTitle">Notifications</h1>
+    </section>
     <section className="notifications-list">
         {hasNotifications ? <>
             {allUserNotifications.map(notification => {
