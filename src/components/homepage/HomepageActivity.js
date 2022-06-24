@@ -94,14 +94,14 @@ export const HomepageActivity = () => {
 
         else if(activity.library === true) {
             return <>
-            <div className="line-one">{activity?.user?.firstName} {activity?.user?.lastName} added {activity.gameName} to their library!</div>
+            <div className="line-one"><Link to={`/profile/${activity?.user?.id}`}>{activity?.user?.firstName} {activity?.user?.lastName}</Link> added {activity.gameName} to their library!</div>
             <div className="line-two">{formattedDate}</div>
             </>
         }
 
         else if(activity.wishlist === true) {
             return <>
-            <div className="line-one">{activity?.user?.firstName} {activity?.user?.lastName} added {activity.gameName} to their wishlist!</div>
+            <div className="line-one"><Link to={`/profile/${activity?.user?.id}`}>{activity?.user?.firstName} {activity?.user?.lastName}</Link> added {activity.gameName} to their wishlist!</div>
             <div className="line-two">{formattedDate}</div>
             </>
         }

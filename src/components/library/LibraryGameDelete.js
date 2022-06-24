@@ -1,3 +1,6 @@
+import { CgCloseR } from 'react-icons/cg'
+import { IconContext } from "react-icons";
+
 export const LibraryGameDelete = ({id, setEmpty, setLibrary}) => {
     const localUser = localStorage.getItem("current_user")
     const localUserObject = JSON.parse(localUser)
@@ -20,5 +23,9 @@ export const LibraryGameDelete = ({id, setEmpty, setLibrary}) => {
         )
     }
 
-    return <button onClick={(event) => {handleDeleteGame(event)}}>Remove</button>
+    return <IconContext.Provider value={{ color: "white", className: "global-class-name", size: "30"}}>
+    <div>
+      <CgCloseR onClick={(event) => {handleDeleteGame(event)}}/>
+    </div>
+  </IconContext.Provider>
 }

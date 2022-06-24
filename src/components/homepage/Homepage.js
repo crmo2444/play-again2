@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import 'react-slideshow-image/dist/styles.css'
 import { HomepageFeatured } from "./HomepageFeatured"
 import { HomepageActivity } from "./HomepageActivity"
 import "./Homepage.css"
@@ -28,6 +29,10 @@ export const Homepage = () => {
             featuredGames.map(game => {
                 allImages.push({
                     image: game?.image?.original_url,
+                    background: game.background,
+                    name: game.name,
+                    deck: game.deck,
+                    trailer: game.trailer,
                     id: game.id
                 })
             })
@@ -43,5 +48,6 @@ export const Homepage = () => {
 
         <HomepageActivity />
         </section>
+
 
 }

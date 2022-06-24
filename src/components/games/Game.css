@@ -4,7 +4,7 @@
     width: 15rem;
     height: 20rem;
     border: 1px solid grey;
-    box-shadow: 5px 4px #888888;
+    box-shadow: 5px 4px #88888871;
 }
 
 .screenshots {
@@ -27,7 +27,7 @@
 .game {
     margin-bottom: 1rem;
     flex-direction: row;
-    height: 10rem;
+    height: 11rem;
     margin-left: 1rem;
 }
 
@@ -36,7 +36,7 @@
     height: 10rem;
     width: 8rem;
     border: 1px solid grey;
-    box-shadow: 5px 4px #888888
+    box-shadow: 5px 4px #88888871;
 }
 
 .titleDetails {
@@ -51,7 +51,7 @@
 
 .dropdownButtons {
     position: relative;
-    top: 3rem;
+    top: 3.5rem;
 }
 
 .imageDetails {
