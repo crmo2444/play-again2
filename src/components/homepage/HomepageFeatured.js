@@ -54,13 +54,12 @@ export const HomepageFeatured = ({gameImages}) => {
  
       return (
         <div>
-            <h1 className="homepageTitle">Featured Games</h1>
           <section className="featured" style={{backgroundImage: `url(${BgImg})`,
         backgroundSize: 'cover'}}>
               <section className="imageTopDetails">
                 {/* <div className="gameTitleFeatured">{title}</div> */}
                 {/* <div className="gameDeck">{deck}</div> */}
-                {/* <button className="detailsButton" onClick={() => navigate(`/game/${gameId}`)}><span>More Details</span></button> */}
+                <button className="detailsButton" onClick={() => navigate(`/game/${gameId}`)}><span>More Details</span></button>
               </section>
               <div className="carousel">
                 <Slide {...properties}>

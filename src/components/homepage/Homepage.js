@@ -4,6 +4,7 @@ import { HomepageFeatured } from "./HomepageFeatured"
 import { HomepageActivity } from "./HomepageActivity"
 import "./Homepage.css"
 import { useNavigate } from "react-router-dom"
+import logo from '/home/crmo244/workspace/play-again2/src/appLogo.png';
 
 export const Homepage = () => {
     const [featuredGames, setFeatured] = useState([])
@@ -43,9 +44,11 @@ export const Homepage = () => {
     )
 
     return <section className="homepage">
+        <section className="homepageHeader">
+        <h1 className="homepageLogo">Play Again</h1>
+        <h1 className="homepageTitle">Featured Games</h1>
+        </section>
         <HomepageFeatured gameImages={gameImages}/>
-        <button className="playAgain" onClick={() => navigate("/play-again")}>Ready to Play Again?</button>
-
         <HomepageActivity />
         </section>
 
