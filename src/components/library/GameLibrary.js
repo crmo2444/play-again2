@@ -89,7 +89,7 @@ export const GameLibrary = () => {
             <h1 className="logo" onClick={() => navigate("/")}>Play Again</h1>
             <h1 className="headerTitle">{currentUser.firstName}'s Game Library</h1>
         </section>
-    <select onChange={(event) => {
+    <select className="gameFilter" onChange={(event) => {
                             let chosenPlatform = event.target.value
                             setChosen(parseInt(chosenPlatform))
                         }}>

@@ -35,6 +35,62 @@ export const NotificationList = () => {
         []
     )
 
+    const AddFriend = (notification) => {
+        const d = new Date();
+        let date = d.toISOString()
+    
+        let newFriend = {
+            requesterId: notification.userSender,
+            accepterId: currentUser.id,
+            date: date
+        }
+    
+        return fetch('http://localhost:8088/friendsList', {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(newFriend)
+                    })
+                        .then(response => response.json())
+                        .then(() => {
+                            fetch(`http://localhost:8088/notifications/${notification.id}`, { method: "DELETE" })
+                            .then(response => response.json())
+                            .then(() => {
+                                fetch(`http://localhost:8088/notifications/?userId=${localUserObject.id}`)
+                                    .then(response=>response.json())
+                                    .then((data) => {
+                                        if(data.length !== 0) {
+                                            setAllUserNotifications(data)
+                                        }
+                                        else {
+                                            setHasNotifications(false)
+                                        }
+                                    })
+                                })
+                        })
+    
+    
+    }
+
+    const denyFriend = (notification) => {
+        fetch(`http://localhost:8088/notifications/${notification.id}`, { method: "DELETE" })
+        .then(
+            () => {
+                fetch(`http://localhost:8088/notifications/?userId=${localUserObject.id}`)
+                .then(response=>response.json())
+                .then((data) => {
+                    if(data.length !== 0) {
+                        setAllUserNotifications(data)
+                    }
+                    else {
+                        setHasNotifications(false)
+                    }
+                })
+            }
+        )
+    }
+
     return <>
     <section className="header">
             <h1 className="logo" onClick={() => navigate("/")}>Play Again</h1>
@@ -45,8 +101,8 @@ export const NotificationList = () => {
             {allUserNotifications.map(notification => {
             return <section className="notification">
                         <div>You have a {notification.contents} from <Link to={`/profile/${notification.userSender}`}>{notification.userSenderName}</Link>.</div>
-                        <button onClick={() => {<AddFriend accept={true}/>}}>Accept</button>
-                        <button>Deny</button>
+                        <button onClick={() => {AddFriend(notification)}}>Accept</button>
+                        <button onClick={() => {denyFriend(notification)}}>Deny</button>
                     </section>
             })}
         </> : <div>No notifications.</div>}

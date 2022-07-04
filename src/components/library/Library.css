@@ -12,6 +12,7 @@
 .games {
     margin-bottom: 1rem;
     position: relative;
+    margin-left: 1.5rem;
 }
 
 .overlay {
@@ -37,4 +38,8 @@
 
 .games:hover .pageButtons { 
 	display:block;
+}
+
+.gameFilter {
+    margin-left: 2rem;
 }

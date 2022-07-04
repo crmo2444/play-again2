@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { setAllGameReviews } from "../../FetchRequests"
 import { keys } from "../../Settings"
 import { AddGameReview } from "../reviews/AddGameReview"
@@ -24,6 +24,8 @@ export const GameDetails = () => {
 
     const localUser = localStorage.getItem("current_user")
     const localUserObject = JSON.parse(localUser)
+
+    let navigate = useNavigate()
 
     useEffect(
         () => {
@@ -102,6 +104,9 @@ export const GameDetails = () => {
     let count = 0
 
     return <>
+    <section className="header">
+            <h1 className="logo" onClick={() => navigate("/")}>Play Again</h1>
+        </section>
          <h3 className="title">{currentGame.name}</h3>
          <div className="date">Release Date: {currentGame.original_release_date}</div>
         <div className="imageDetails">

@@ -7,6 +7,8 @@ import { FiMenu } from 'react-icons/fi'
 export const NavBar = () => {
     const [navbarOpen, setNavbarOpen] = useState(false)
     const [user, setUser] = useState({})
+    const [notifications, setAllUserNotifications] = useState([])
+    const [hasNotifications, setHasNotifications] = useState(true)
 
     const localUser = localStorage.getItem("current_user")
     const localUserObject = JSON.parse(localUser)
@@ -19,9 +21,21 @@ export const NavBar = () => {
                 let single = data[0]
                 setUser(single)
             })
+
+            fetch(`http://localhost:8088/notifications/?userId=${localUserObject.id}`)
+                .then(response=>response.json())
+                .then((data) => {
+                    if(data.length !== 0) {
+                        setAllUserNotifications(data)
+                    }
+                    else {
+                        setHasNotifications(false)
+                    }
+                })
         },
         []
     )
+    
 
     const handleToggle = () => {
         setNavbarOpen(!navbarOpen)
@@ -40,7 +54,7 @@ export const NavBar = () => {
         )}</button>
         <ul className={`menuNav ${navbarOpen ? " showMenu" : ""}`}>
             <li className="navbar__item active">
-                <div>Hello {user.firstName}!</div>
+                <div className="helloMessage">Hello {user.firstName}!</div>
             </li>
             <li className="navbar__item active">
                 <Link className="navbar__link" to="/search">Find Games</Link>
@@ -59,6 +73,7 @@ export const NavBar = () => {
             </li>
             <li className="navbar__item active">
                 <Link className="navbar__link" to="/notifications">Notifications</Link>
+                {/* <div className="notificationNumber">4</div> */}
             </li>
 
             {
