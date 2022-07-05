@@ -98,6 +98,6 @@ export const AddGameReview = ({user, game, setter, setNoReviews, gameName}) => {
                     Submit Review
                 </button>
             </form>
-        </> : <button onClick={() => setButtonState(true)}>Add a Review</button>}
+        </> : <button className="reviewButton" onClick={() => setButtonState(true)}>Add a Review</button>}
             </>
 }

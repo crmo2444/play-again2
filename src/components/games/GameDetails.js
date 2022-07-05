@@ -6,6 +6,7 @@ import { keys } from "../../Settings"
 import { AddGameReview } from "../reviews/AddGameReview"
 import { DeleteGameReview } from "../reviews/DeleteGameReview"
 import { EditGameReview } from "../reviews/EditGameReview"
+import ImageGallery from 'react-image-gallery';
 
 export const GameDetails = () => {
     const {gameId} = useParams()
@@ -103,41 +104,49 @@ export const GameDetails = () => {
 
     let count = 0
 
+    const images = []
+
+    screenshots.map(screenshot => {
+        if (count === 0) {
+            count++
+        }
+
+        else if (count !== 0) {
+            let x = {
+                original: `${screenshot.image}`,
+                thumbnail: `${screenshot.image}`
+            }
+    
+            images.push(x)
+        }
+    })  
+
     return <>
     <section className="header">
             <h1 className="logo" onClick={() => navigate("/")}>Play Again</h1>
         </section>
-         <h3 className="title">{currentGame.name}</h3>
-         <div className="date">Release Date: {currentGame.original_release_date}</div>
-        <div className="imageDetails">
-        <img className="gamePhoto" src={backgroundPic}/></div>
+        <section className="topHalf">
+            <section className="allDetails">
+                <h3 className="title">{currentGame.name}</h3>
+                <div className="date">Release Date: {currentGame.original_release_date}</div>
+                    {genres.map(genre => {
+                        return <div className="genre">{genre.name}</div>
+                    })}
+                    {themes.map(theme => {
+                        return <div className="theme">{theme.name}</div>
+                    })}
+                    <div className="description">{currentGame.deck}</div>
+            </section>
+                <div className="photoGallery"><ImageGallery items={images} /></div>
+        </section>
         {/* trailer ? <>{trailerVid()}</> : null} */}
         <div>Available on: </div>
+        <section className="platformsList">
         {gamePlatforms.map(platform => {
             return <div>{platform.name}</div>
         })}
-        <br></br>
-        <div>Genres: </div>
-        {genres.map(genre => {
-            return <div>{genre.name}</div>
-        })}
-        <br></br>
-        <div>Themes:</div>
-        {themes.map(theme => {
-            return <div>{theme.name}</div>
-        })}
-        <div className="description">{currentGame.deck}</div>
-        <section className="screenshots">
-            {screenshots.map(screenshot => {
-                if(count === 0) {
-                    count++
-                }
-                else{
-                    count++
-                    return <img className="screenshot" src={screenshot.image}/>
-                }
-            })}
         </section>
+        <br></br>
         {noReviews ? <>
         <h3>All Reviews</h3>
         <div>No reviews yet!</div> 
@@ -148,6 +157,21 @@ export const GameDetails = () => {
         setter={setGameReviews} 
         setNoReviews={setNoReviews}/>
         </> : <>
+        <section className="reviews">
+            <h3 className="reviewTitle">All Reviews</h3>
+            {gameReviews.map(review => {
+                return <section className="review">
+                            <div className="reviewLeft"><img className="profilePic" src={review?.user?.profilePicture} /></div>
+                            <div className="reviewRight">
+                                <div>{review.review}</div>
+                                <br></br>
+                                <div>{review.rating}</div>
+                                <div className="reviewName">Review by {review?.user?.firstName} {review?.user?.lastName}</div>
+                                {currentUserReviews(review)}
+                            </div>
+                    </section>
+            })}
+        </section>
             <AddGameReview
             user={localUserObject.id} 
             game={parseInt(gameId)} 
@@ -155,18 +179,6 @@ export const GameDetails = () => {
             setNoReviews={setNoReviews}
             gameName={currentGame.name}/>
         <br></br>
-        <section className="reviews">
-            <h3>All Reviews</h3>
-            {gameReviews.map(review => {
-                return <section className="review">
-                            <div><img className="profilePic" src={review?.user?.profilePicture} /></div>
-                            <div>{review.review}</div>
-                            <div>{review.rating}</div>
-                            <div>Review by {review?.user?.firstName} {review?.user?.lastName}</div>
-                            {currentUserReviews(review)}
-                    </section>
-            })}
-        </section>
         </>}
         </>
 }

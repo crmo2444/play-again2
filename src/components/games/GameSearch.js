@@ -101,8 +101,8 @@ export const GameSearch = () => {
             <h1 className="logo" onClick={() => navigate("/")}>Play Again</h1>
             <h1 className="headerTitle">Find Games</h1>
         </section>
-        <div>
-            <div>Input Title or Keyword</div>
+        <div className="searchBar">
+            <div className="searchTitle">Input Title or Keyword</div>
             <input 
                 type="text" 
                 placeholder="Search..."
@@ -118,7 +118,7 @@ export const GameSearch = () => {
                    } 
                 }}
                 />
-            <button onClick={() => searchGames(searchTerms, 1)}>Search</button>
+            <button className="searchButton" onClick={() => searchGames(searchTerms, 1)}>Search</button>
 
             {searchResults.length !== 0 ? <>
             <div>Showing {resultsString} of {searchResultsNumber} results</div>
@@ -137,9 +137,7 @@ export const GameSearch = () => {
             <section className="resultsContainer">
             {searchResults.map(result => <Game key={`game--${result.id}`} gameObject={result}/>)}
             </section>
-            </> : <>
-            <div>Nothing to see here</div>
-            </>}
+            </> : null}
         </div>
         </section>
 }

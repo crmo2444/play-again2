@@ -1,13 +1,45 @@
 
 .gameWishlist {
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto;
+    padding: 10px;
+    overflow: auto;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
 }
 
-.addLibrary {
-    margin-left: 4.75rem;
+.games {
+    margin-bottom: 1rem;
+    position: relative;
+    margin-left: 1.5rem;
 }
 
-.game {
-    margin: 0rem 1rem 0rem 2rem;
+.overlay {
+    position: relative;
+    z-index: 1;
+}
+
+.libraryGameImage {
+    width: 15rem;
+    height: 20rem;
+    border: 1px solid grey;
+    box-shadow: 5px 4px #88888871;
+    position: relative;
+}
+
+.pageButtons {
+    position: absolute;
+    z-index: 2;
+    top: 17.5rem;
+    display: none;
+    left: 12.5rem;	
+}
+
+.games:hover .pageButtons { 
+	display:block;
+}
+
+.gameFilter {
+    margin-left: 2rem;
 }

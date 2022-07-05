@@ -49,7 +49,7 @@ export const Homepage = () => {
         <h1 className="headerTitle">Featured Games</h1>
         </section>
         <HomepageFeatured gameImages={gameImages}/>
-        <HomepageActivity />
+        {/* <HomepageActivity /> */}
         </section>
 
 

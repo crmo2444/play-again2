@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@import "~react-image-gallery/styles/css/image-gallery.css";
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300&display=swap');
 
 .gameImage {
     width: 15rem;
@@ -69,34 +71,62 @@
 }
 
 .title {
-    position: absolute;
-    top: 4rem;
-    left: 1rem;
-    color: rgba(255, 255, 255, 0.918);
+    /* position: absolute;
+    top: 1.5rem;
+    left: 80rem; */
+    color: rgba(0, 0, 0, 0.918);
     font-size: 28pt;
     opacity: 0.8;
-    text-shadow: 3px 1px rgb(105, 104, 104);
     font-family: 'Bebas Neue', cursive;
     letter-spacing: 0.3rem;
+    margin: 1rem;
 }
 
 .date {
-    position: absolute;
-    top: 9rem;
-    left: 1rem;
-    color: rgba(255, 255, 255, 0.918);
+   /*  position: absolute;
+    top: 10rem;
+    left: 80rem; */
+    color: rgba(0, 0, 0, 0.918);
+    font-size: 14pt;
+    opacity: 0.8;
+    margin-left: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.theme {
+    /* position: absolute;
+    top: 7rem;
+    left: 80rem; */
+    color: rgba(0, 0, 0, 0.918);
     font-size: 12pt;
     opacity: 0.8;
+    margin-left: 1rem;
+}
+
+.genre {
+   /*  position: absolute;
+    top: 8rem;
+    left: 80rem; */
+    color: #000000ea;
+    font-size: 12pt;
+    opacity: 0.8;
+    margin-left: 1rem;
 }
 
 .description {
-    position: absolute;
-    top: 11rem;
-    left: 1rem;
-    color: rgba(255, 255, 255, 0.808);
-    font-size: 12pt;
-    max-width: 20rem;
+    /* position: absolute;
+    top: 12rem;
+    left: 80rem; */
+    color: rgba(0, 0, 0, 0.808);
+    font-size: 13pt;
+    max-width: 33rem;
     opacity: 0.5;
+    margin-left: 1rem;
+    margin-top: 0.5rem;
+}
+
+.description:hover {
+    opacity: 1;
 }
 
 .pageNumber {
@@ -123,4 +153,64 @@
 
 .review {
     margin: 1rem;
+}
+
+.platformLogo {
+    width: 3rem;
+    height: 3rem;
+    margin-left: 1rem;
+}
+
+.image-gallery {
+    width: 75rem;
+    margin-left: 2rem;
+}
+
+.allDetails {
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px; 
+    font-family: 'Roboto Condensed', sans-serif;
+    width: 35rem;
+}
+
+.topHalf {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    background-color: rgb(247, 247, 247);
+}
+
+.review {
+    font-family: 'Roboto Condensed', sans-serif;
+    display: flex;
+    flex-direction: row;
+    border: 1px solid rgb(207, 207, 207);
+    padding: 0.5rem;
+    border-radius: 5px;
+    background-color: rgb(247, 247, 247);
+}
+
+.reviewLeft {
+    margin-right: 1rem;
+}
+
+.reviewTitle {
+    margin-left: 1rem;
+}
+
+.reviewButton {
+    margin-left: 1rem;
+}
+
+.reviewRight {
+    margin-bottom: 0.3rem;
+}
+
+.reviewName {
+    font-size: 10pt;
+}
+
+.searchBar {
+    margin-left: 1rem;
 }
