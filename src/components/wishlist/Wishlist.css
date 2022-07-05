@@ -28,7 +28,7 @@
     position: relative;
 }
 
-.pageButtons {
+.wishlistDelete {
     position: absolute;
     z-index: 2;
     top: 17.5rem;
@@ -36,10 +36,22 @@
     left: 12.5rem;	
 }
 
-.games:hover .pageButtons { 
+.games:hover .wishlistDelete { 
 	display:block;
 }
 
-.gameFilter {
+.wishlistAdd {
+    position: absolute;
+    z-index: 2;
+    top: 17.5rem;
+    display: none;
+    left: 10rem;	
+}
+
+.games:hover .wishlistAdd { 
+	display:block;
+}
+
+.gameFilterWish {
     margin-left: 2rem;
 }

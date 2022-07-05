@@ -24,13 +24,22 @@
     display: flex;
     flex-direction: column;
     align-content: space-between;
+    margin-left: 2rem;
 }
 
 .game {
     margin-bottom: 1rem;
     flex-direction: row;
     height: 11rem;
-    margin-left: 1rem;
+    margin-left: 7rem;
+    border: 1px solid rgb(216, 216, 216);
+    border-radius: 5px;
+    padding-top: 10px;
+    padding-left: 8px;
+    padding-right: 8px;
+    background-color: #f3f3f3ea;
+    max-width: 100rem;
+    box-shadow: 2px 2px #cccccc71
 }
 
 .coverPhoto {
@@ -49,11 +58,13 @@
 
 .gameDescription {
     height: 4rem;
+    font-family: 'Roboto Condensed', sans-serif;
+    max-width: 90rem;
 }
 
 .dropdownButtons {
     position: relative;
-    top: 3.5rem;
+    top: 2.2rem;
 }
 
 .imageDetails {
@@ -212,5 +223,10 @@
 }
 
 .searchBar {
-    margin-left: 1rem;
+    text-align: center;
+    margin: 1rem;
+}
+
+.pageNumbers {
+    text-align: center;
 }

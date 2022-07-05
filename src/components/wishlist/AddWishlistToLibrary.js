@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react"
 import { addToGameLibrary, setLibraryGames } from "../../FetchRequests"
+import { BiLibrary } from 'react-icons/bi'
+import { IconContext } from "react-icons";
 
 export const AddWishlistToLibrary = ({id, setEmpty, setWishlist, platform, gameObj}) => {
     const [library, setLibrary] = useState([])
@@ -75,5 +77,9 @@ export const AddWishlistToLibrary = ({id, setEmpty, setWishlist, platform, gameO
             }
         )
     } 
-    return <button className="addLibrary" onClick={()=>checkLibrary()}>Add to Library</button>
+    return <IconContext.Provider value={{ color: "white", className: "global-class-name", size: "30"}}>
+    <div>
+      <BiLibrary title="Add to Library" onClick={()=>checkLibrary()}/>
+    </div>
+  </IconContext.Provider>
 }

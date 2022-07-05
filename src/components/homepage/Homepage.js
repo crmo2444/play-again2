@@ -4,7 +4,6 @@ import { HomepageFeatured } from "./HomepageFeatured"
 import { HomepageActivity } from "./HomepageActivity"
 import "./Homepage.css"
 import { useNavigate } from "react-router-dom"
-import logo from '/home/crmo244/workspace/play-again2/src/appLogo.png';
 
 export const Homepage = () => {
     const [featuredGames, setFeatured] = useState([])
