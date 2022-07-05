@@ -87,7 +87,6 @@
     left: 80rem; */
     color: rgba(0, 0, 0, 0.918);
     font-size: 28pt;
-    opacity: 0.8;
     font-family: 'Bebas Neue', cursive;
     letter-spacing: 0.3rem;
     margin: 1rem;
@@ -99,7 +98,6 @@
     left: 80rem; */
     color: rgba(0, 0, 0, 0.918);
     font-size: 14pt;
-    opacity: 0.8;
     margin-left: 1rem;
     margin-bottom: 0.5rem;
 }
@@ -120,7 +118,6 @@
     left: 80rem; */
     color: #000000ea;
     font-size: 12pt;
-    opacity: 0.8;
     margin-left: 1rem;
 }
 
@@ -131,13 +128,8 @@
     color: rgba(0, 0, 0, 0.808);
     font-size: 13pt;
     max-width: 33rem;
-    opacity: 0.5;
     margin-left: 1rem;
     margin-top: 0.5rem;
-}
-
-.description:hover {
-    opacity: 1;
 }
 
 .pageNumber {
@@ -229,4 +221,39 @@
 
 .pageNumbers {
     text-align: center;
+}
+
+.buyNowButtons {
+    display: flex;
+    flex-direction: row;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.buyNow {
+    width: 7.5rem;
+    height: 2.5rem;
+    margin-left: 1rem;
+}
+
+.platformBuyNow {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.dropdowns {
+    margin-left: 1rem;
+}
+
+.wishlistLibButtons {
+    position: absolute;
+    left: 9rem;
+    top: 52rem;
+}
+
+.buy-Now {
+    width: 7.5rem;
+    height: 3rem;
+    margin-left: 1rem;
 }

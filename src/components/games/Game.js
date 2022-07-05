@@ -40,6 +40,7 @@ export const Game = ({gameObject}) => {
             }
         })
 
+
         let foundPlatform = platforms.find(platform => platform.id === chosenConsole)
 
         if (foundGame) {

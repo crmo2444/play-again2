@@ -26,6 +26,13 @@
     border: 1px solid grey;
     box-shadow: 5px 4px #88888871;
     position: relative;
+    transition: 0.5s cubic-bezier(0.6, 0.03, 0.28, 0.98);  
+    transform: scale(1);
+}
+
+.libraryGameImage:hover {
+    transform: scale(1.05);
+    transition: 0.5s cubic-bezier(0.6, 0.03, 0.28, 0.98);
 }
 
 .pageButtons {

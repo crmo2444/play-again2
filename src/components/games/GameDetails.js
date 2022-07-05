@@ -7,6 +7,10 @@ import { AddGameReview } from "../reviews/AddGameReview"
 import { DeleteGameReview } from "../reviews/DeleteGameReview"
 import { EditGameReview } from "../reviews/EditGameReview"
 import ImageGallery from 'react-image-gallery';
+import { IoMdHeartEmpty } from 'react-icons/io'
+import { IoMdHeart } from 'react-icons/io'
+import { IconContext } from "react-icons";
+import { BiLibrary } from 'react-icons/bi'
 
 export const GameDetails = () => {
     const {gameId} = useParams()
@@ -22,6 +26,10 @@ export const GameDetails = () => {
     const [screenshots, setScreenshots] = useState([])
     const [gameReviews, setGameReviews] = useState([])
     const [noReviews, setNoReviews] = useState(false)
+    const [chosenPlatform, setChosen] = useState(0)
+    const [chosenState, setChosenState] = useState(false)
+    const [hasLibrary, setHasLibrary] = useState(false)
+    const [hasWishlist, setHasWishlist] = useState(false)
 
     const localUser = localStorage.getItem("current_user")
     const localUserObject = JSON.parse(localUser)
@@ -44,6 +52,7 @@ export const GameDetails = () => {
                 })
 
             setAllGameReviews(gameId, setNoReviews, setGameReviews)
+
         },
         []
     )
@@ -73,6 +82,43 @@ export const GameDetails = () => {
             setTrailer(foundVideo)
         },
         [videos]
+    )
+
+    useEffect(
+        () => {
+            if (chosenPlatform !== 0) {
+                setChosenState(true)
+            }
+
+            fetch(`http://localhost:8088/libraryGames?userId=${localUserObject.id}`)
+                .then(response=>response.json())
+                .then((data) => {
+                    if(data.length !== 0) {
+                        data.map(game => {
+                            if(game?.gameObject?.id === parseInt(gameId) && game.platform === chosenPlatform) {
+                                setHasLibrary(true)
+                            }
+                            
+                        })
+                    }
+                })
+
+            fetch(`http://localhost:8088/wishlistGames?userId=${localUserObject.id}`)
+                .then(response=>response.json())
+                .then((data) => {
+                    if(data.length !== 0) {
+                        data.map(game => {
+                            if(game?.gameObject?.id === parseInt(gameId) && game.platform === chosenPlatform) {
+                                setHasWishlist(true)
+                            }
+                            else {
+                                setHasWishlist(false)
+                            }
+                        })
+                    }
+                })
+        },
+        [chosenPlatform]
     )
 
     const trailerVid = () => {
@@ -140,13 +186,58 @@ export const GameDetails = () => {
                 <div className="photoGallery"><ImageGallery items={images} /></div>
         </section>
         {/* trailer ? <>{trailerVid()}</> : null} */}
+        <section className="platformBuyNow">
+        <section className="dropdowns">
         <div>Available on: </div>
-        <section className="platformsList">
+        <select className="platformDropdown" onChange={(event) => {
+                            let chosenPlatform = event.target.value
+                            setChosen(parseInt(chosenPlatform))
+                            setHasLibrary(false)
+                            setHasWishlist(false)
+                        }}>
+        <option value="0">Filter by...</option>
         {gamePlatforms.map(platform => {
-            return <div>{platform.name}</div>
+            count++
+            return <option value={`${platform.id}`}>{platform.name}</option>
         })}
+        </select>
+        {chosenState ? 
+            <section className="wishlistLibButtons">
+                {hasLibrary ? <IconContext.Provider value={{ color: "red", className: "global-class-name", size: "30"}}>
+                                    <BiLibrary title="Remove from Library"
+                                    onClick={() => {setHasLibrary(false)
+                                    setHasWishlist(false)}}/>
+                              </IconContext.Provider> : <>
+                              {hasWishlist ? <><IconContext.Provider value={{ color: "black", className: "global-class-name", size: "30"}}>
+                                      <BiLibrary title="Add to Library"
+                                      onClick={() => {setHasLibrary(true)
+                                        setHasWishlist(false)}}/>
+                                </IconContext.Provider> 
+                                <IconContext.Provider value={{ color: "red", className: "global-class-name", size: "30"}}>
+                                  <IoMdHeart title="Remove from Wishlist"
+                                  onClick={() => setHasWishlist(false)}/>
+                              </IconContext.Provider></> :  <>
+                                <IconContext.Provider value={{ color: "black", className: "global-class-name", size: "30"}}>
+                                      <BiLibrary title="Add to Library"
+                                      onClick={() => setHasLibrary(true)}/>
+                                </IconContext.Provider> 
+                                <IconContext.Provider value={{ color: "black", className: "global-class-name", size: "30"}}>
+                                  <IoMdHeartEmpty title="Add to Wishlist"
+                                  onClick={() => setHasWishlist(true)}/>
+                              </IconContext.Provider>
+                              </>}
+                              </>}
+            </section> : null}
         </section>
-        <br></br>
+        <section className="buyNowButtons">
+        <a href={`https://www.amazon.com/s?k=${formattedName}+game&crid=GUOR689WXLXW&sprefix=${formattedName}+game%2Caps%2C179&ref=nb_sb_noss_1`}  target="_blank">
+            <img className="buyNow" src="https://freestyleconnection.com/wp-content/uploads/2018/01/button-buy-amazon-01.png"/>
+        </a>
+        <a href={`https://www.gamestop.com/search/?q=${formattedName}&lang=default&kpsdkCt=02BSGhFefeisWZCn5w52mgN6luEob7C8wHmWbeMYQ4erxSYF7RHtNuRyXvY77Zw0JAFHCCcW5mEjCVNhadSeDWRoVnlbSmrRLOhz1DY3EvlM7k1zRrs2myXYu5Ve3cvqGvaUT96zMYlgFxnRg0BjjF7VKKh`} target="_blank">
+            <img className="buy-Now" src="https://logos-world.net/wp-content/uploads/2021/02/GameStop-Logo-2000-present.jpg"/>
+        </a>
+        </section>
+        </section>
         {noReviews ? <>
         <h3>All Reviews</h3>
         <div>No reviews yet!</div> 

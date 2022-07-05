@@ -28,6 +28,7 @@ export const AddWishlistToLibrary = ({id, setEmpty, setWishlist, platform, gameO
                 game.gameObject.platforms.map(plat => {
                     if(platform === plat) {
                         name = plat.name
+                        console.log(plat)
                     }
                 })
                 foundGame = true
@@ -35,7 +36,7 @@ export const AddWishlistToLibrary = ({id, setEmpty, setWishlist, platform, gameO
         })
 
         if (foundGame) {
-            return window.alert(`${gameObj?.gameObject?.name} on ${name} already in library.`)
+            return window.alert(`${gameObj?.gameObject?.name} already in library.`)
         }
         else {
             addToLibrary()
