@@ -42,48 +42,44 @@ export const EditGameReview = ({reviewObject, game, setter, user}) => {
     }
 
     return <>
-    {buttonState ? <form className="reviewForm">
-                <fieldset>
-                    <div className="form-group">
-                        <label htmlFor="review">Review: </label>
-                        <input
-                            required autoFocus
-                            type="text"
-                            className="form-control"
-                            value={review.review}
-                            onChange={
-                                (event) => {
-                                    const copy = {...review}
-                                    copy.review = event.target.value
-                                    setReview(copy)
-                                }
-                            } />
-                    </div>
-                </fieldset>
-                <fieldset>
-                    <div className="form-group">
-                        <label htmlFor="rating">Rating: </label>
-                        <input
-                            required autoFocus 
-                            type="number"
-                            className="form-control"
-                            value={review.rating}
-                            onChange={
-                                (event) => {
-                                    const copy = {...review}
-                                    copy.rating = event.target.value
-                                    setReview(copy)
-                                }
-                            } />
-                    </div>
-                </fieldset>
-                <button onClick={(clickEvent) => 
+    {buttonState ? <form class="form-style-7">
+            <ul>
+            <li>
+                <label for="rating">Rating</label>
+                <input type="number" name="name" maxlength="100"
+                    value={review.rating}
+                    onChange={
+                        (event) => {
+                            const copy = {...review}
+                            copy.rating = event.target.value
+                            setReview(copy)
+                        }
+                    }/>
+                <span>Enter rating (0-10)...</span>
+            </li>
+            <li>
+                <label for="review">Review</label>
+                <input type="text" name="review" maxlength="100" maxheight="500"
+                    className="form-control"
+                    value={review.review}
+                    onChange={
+                        (event) => {
+                            const copy = {...review}
+                            copy.review = event.target.value
+                            setReview(copy)
+                        }
+                    }/>
+                <span>Enter review here...</span>
+            </li>
+
+            <li>
+                <input type="submit" value="Submit" 
+                onClick={(clickEvent) => 
                     handleSaveButtonClick(clickEvent)
-                }
-                className="btn btn-primary">
-                    Submit Review
-                </button>
-            </form>
+                }/>
+            </li>
+            </ul>
+        </form>
          : <button onClick={() => setButtonState(true)}>Edit</button>}
     </>
 }

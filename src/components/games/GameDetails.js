@@ -30,6 +30,10 @@ export const GameDetails = () => {
     const [chosenState, setChosenState] = useState(false)
     const [hasLibrary, setHasLibrary] = useState(false)
     const [hasWishlist, setHasWishlist] = useState(false)
+    const [wishlistId, setWishlistId] = useState(0)
+    const [libraryId, setLibraryId] = useState(0)
+    const [description, setDescription] = useState("")
+    const [formattedDescription, setFormatted] = useState("")
 
     const localUser = localStorage.getItem("current_user")
     const localUserObject = JSON.parse(localUser)
@@ -73,16 +77,48 @@ export const GameDetails = () => {
 
     useEffect(
         () => {
+            let description = currentGame.description
+            setDescription(description)
+        },
+        [currentGame]
+    )
+
+    useEffect(
+        () => {
+            if(typeof description !== 'undefined') {
+                let format = description.replace(/(<([^>]+)>)/gi, "")
+                let minusOverview = format.slice(8)
+                setFormatted(minusOverview)
+            }
+        },
+        [description]
+    )
+
+   /*  useEffect(
+        () => {
             let foundVideo 
 
             if (videos.length !== 0) {
                 foundVideo = videos.find(video => video.name.includes('Trailer') || video.name.includes('trailer'))
+
+                if (foundVideo) {
+                    setTrailer(foundVideo)
+                }
+                else {
+                    setTrailer(videos[0])
+                }
             }
 
-            setTrailer(foundVideo)
         },
         [videos]
     )
+
+    useEffect(
+        () => {
+            trailerVid()
+        },
+        [trailer]
+    ) */
 
     useEffect(
         () => {
@@ -121,7 +157,7 @@ export const GameDetails = () => {
         [chosenPlatform]
     )
 
-    const trailerVid = () => {
+    /* const trailerVid = () => {
         if(typeof trailer !== 'undefined') {
             let string = trailer.api_detail_url
             let split = string.split("i/")
@@ -137,7 +173,7 @@ export const GameDetails = () => {
         else {
             console.log('hi')
         }
-    }
+    } */
 
     const currentUserReviews = (review) => {
         if(localUserObject.id === review.userId) {
@@ -167,6 +203,85 @@ export const GameDetails = () => {
         }
     })  
 
+    const addToLibrary = () => {
+
+        const d = new Date();
+        let date = d.toISOString()
+
+        const newGame = {
+            userId: localUserObject.id,
+            gameObject: currentGame,
+            platform: chosenPlatform,
+            date: date
+        }
+    
+        // TODO: Perform the fetch() to POST the object to the API
+        fetch('http://localhost:8088/libraryGames', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(newGame)
+        })
+        .then(
+            () => {
+                fetch(`http://localhost:8088/libraryGames`)
+                .then(response => response.json())
+                .then((data) => {
+                    let lastGame = data.slice(-1)
+                    setLibraryId(lastGame[0].id)
+                })
+            }
+        )
+
+        if(hasWishlist === true) {
+            handleDeleteWishlistGame()
+            setHasWishlist(false)
+        }
+    }
+
+    const addToWishlist = () => {
+
+        const d = new Date();
+        let date = d.toISOString()
+
+        const newGame = {
+            userId: localUserObject.id,
+            gameObject: currentGame,
+            platform: chosenPlatform,
+            date: date
+        }
+    
+        // TODO: Perform the fetch() to POST the object to the API
+        fetch('http://localhost:8088/wishlistGames', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(newGame)
+        })
+        .then(
+            () => {
+                fetch(`http://localhost:8088/wishlistGames`)
+                .then(response => response.json())
+                .then((data) => {
+                    let lastGame = data.slice(-1)
+                    setWishlistId(lastGame[0].id)
+                })
+            }
+        )
+    }
+    
+    const handleDeleteWishlistGame = () => {
+        return fetch(`http://localhost:8088/wishlistGames/${wishlistId}`, { method: "DELETE" })
+                    .then(response => response.json())
+    } 
+
+    const handleDeleteLibraryGame = () => {
+        return fetch(`http://localhost:8088/libraryGames/${libraryId}`, { method: "DELETE" })
+                    .then(response => response.json())
+    } 
+
     return <>
     <section className="header">
             <h1 className="logo" onClick={() => navigate("/")}>Play Again</h1>
@@ -181,7 +296,7 @@ export const GameDetails = () => {
                     {themes.map(theme => {
                         return <div className="theme">{theme.name}</div>
                     })}
-                    <div className="description">{currentGame.deck}</div>
+                    <div className="description">{formattedDescription}</div>
             </section>
                 <div className="photoGallery"><ImageGallery items={images} /></div>
         </section>
@@ -206,24 +321,28 @@ export const GameDetails = () => {
                 {hasLibrary ? <IconContext.Provider value={{ color: "red", className: "global-class-name", size: "30"}}>
                                     <BiLibrary title="Remove from Library"
                                     onClick={() => {setHasLibrary(false)
-                                    setHasWishlist(false)}}/>
+                                    setHasWishlist(false)
+                                    handleDeleteLibraryGame()}}/>
                               </IconContext.Provider> : <>
                               {hasWishlist ? <><IconContext.Provider value={{ color: "black", className: "global-class-name", size: "30"}}>
                                       <BiLibrary title="Add to Library"
                                       onClick={() => {setHasLibrary(true)
-                                        setHasWishlist(false)}}/>
+                                        addToLibrary()}}/>
                                 </IconContext.Provider> 
                                 <IconContext.Provider value={{ color: "red", className: "global-class-name", size: "30"}}>
                                   <IoMdHeart title="Remove from Wishlist"
-                                  onClick={() => setHasWishlist(false)}/>
+                                  onClick={() => {setHasWishlist(false)
+                                  handleDeleteWishlistGame()}}/>
                               </IconContext.Provider></> :  <>
                                 <IconContext.Provider value={{ color: "black", className: "global-class-name", size: "30"}}>
                                       <BiLibrary title="Add to Library"
-                                      onClick={() => setHasLibrary(true)}/>
+                                      onClick={() => {setHasLibrary(true)
+                                      addToLibrary()}}/>
                                 </IconContext.Provider> 
                                 <IconContext.Provider value={{ color: "black", className: "global-class-name", size: "30"}}>
                                   <IoMdHeartEmpty title="Add to Wishlist"
-                                  onClick={() => setHasWishlist(true)}/>
+                                  onClick={() => {setHasWishlist(true)
+                                  addToWishlist()}}/>
                               </IconContext.Provider>
                               </>}
                               </>}
@@ -239,8 +358,8 @@ export const GameDetails = () => {
         </section>
         </section>
         {noReviews ? <>
-        <h3>All Reviews</h3>
-        <div>No reviews yet!</div> 
+        <h3 className="reviewTitle">All Reviews</h3>
+        <div className="reviewTitle">No reviews yet!</div> 
         <br></br>
         <AddGameReview user={localUserObject.id} 
         game={parseInt(gameId)} 

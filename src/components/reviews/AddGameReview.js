@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import "./Review.css"
 
 export const AddGameReview = ({user, game, setter, setNoReviews, gameName}) => {
         const [review, update] = useState({
@@ -53,13 +54,22 @@ export const AddGameReview = ({user, game, setter, setNoReviews, gameName}) => {
                 }
             )
         }
+
+        
+        //auto expand textarea
+        function adjust_textarea(h) {
+            h.style.height = "20px";
+            h.style.height = (h.scrollHeight)+"px";
+        }
     
         return <>
-        {buttonState ? <>
-            <form className="reviewForm">
-                <fieldset>
-                    <div className="form-group">
-                        <label htmlFor="review">Review: </label>
+        {buttonState ? <div classname="reviewContainer">
+            {/* <form action="/action_page.php">
+                <div className="row">
+                    <div className="col-25">
+                        <label htmlFor="review">Review </label>
+                    </div>
+                    <div className="col-75">
                         <input
                             required autoFocus
                             type="text"
@@ -73,10 +83,12 @@ export const AddGameReview = ({user, game, setter, setNoReviews, gameName}) => {
                                 }
                             } />
                     </div>
-                </fieldset>
-                <fieldset>
-                    <div className="form-group">
-                        <label htmlFor="rating">Rating: </label>
+                </div>
+                <div className="row">
+                    <div className="col-25">
+                        <label htmlFor="rating">Rating </label>
+                    </div>
+                    <div className="col-75">
                         <input
                             required autoFocus 
                             type="number"
@@ -90,14 +102,55 @@ export const AddGameReview = ({user, game, setter, setNoReviews, gameName}) => {
                                 }
                             } />
                     </div>
-                </fieldset>
+                </div>
+                <div className="row">
                 <button onClick={(clickEvent) => 
                     handleSaveButtonClick(clickEvent)
                 }
                 className="btn btn-primary">
                     Submit Review
                 </button>
-            </form>
-        </> : <button className="reviewButton" onClick={() => setButtonState(true)}>Add a Review</button>}
+                </div>
+            </form> */}
+
+        <form class="form-style-7">
+            <ul>
+            <li>
+                <label for="rating">Rating</label>
+                <input type="number" name="name" maxlength="100"
+                    value={review.rating}
+                    onChange={
+                        (event) => {
+                            const copy = {...review}
+                            copy.rating = event.target.value
+                            update(copy)
+                        }
+                    }/>
+                <span>Enter rating (0-10)...</span>
+            </li>
+            <li>
+                <label for="review">Review</label>
+                <input type="text" name="review" maxlength="100" maxheight="500"
+                    className="form-control"
+                    value={review.review}
+                    onChange={
+                        (event) => {
+                            const copy = {...review}
+                            copy.review = event.target.value
+                            update(copy)
+                        }
+                    }/>
+                <span>Enter review here...</span>
+            </li>
+
+            <li>
+                <input type="submit" value="Submit" 
+                onClick={(clickEvent) => 
+                    handleSaveButtonClick(clickEvent)
+                }/>
+            </li>
+            </ul>
+        </form>
+        </div> : <button className="reviewButton" onClick={() => setButtonState(true)}>Add a Review</button>}
             </>
 }

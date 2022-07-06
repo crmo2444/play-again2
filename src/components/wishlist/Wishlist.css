@@ -20,12 +20,17 @@
     z-index: 1;
 }
 
-.libraryGameImage {
+.gameImage {
     width: 15rem;
     height: 20rem;
     border: 1px solid grey;
     box-shadow: 5px 4px #88888871;
     position: relative;
+}
+
+.gameImage:hover {
+    transform: scale(1.05);
+    transition: 0.5s cubic-bezier(0.6, 0.03, 0.28, 0.98);
 }
 
 .wishlistDelete {
