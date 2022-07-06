@@ -183,10 +183,10 @@ export const GameDetails = () => {
 
     const currentUserReviews = (review) => {
         if(localUserObject.id === review.userId) {
-            return <>
+            return <section className="reviewButtons">
             <EditGameReview reviewObject={review} game={parseInt(gameId)} setter={setGameReviews} user={localUserObject.id} gameName={currentGame?.name}/>
             <DeleteGameReview id={review.id} game={parseInt(gameId)} setter={setGameReviews}/>
-            </>
+            </section>
         }
     }
 

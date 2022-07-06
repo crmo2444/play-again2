@@ -8,7 +8,8 @@ export const EditGameReview = ({reviewObject, game, setter, user, gameName}) => 
         game: game,
         review: reviewObject.review,
         rating: reviewObject.rating,
-        gameName: gameName
+        gameName: gameName,
+        date: reviewObject.date
     })
 
     let navigate = useNavigate()
@@ -16,12 +17,16 @@ export const EditGameReview = ({reviewObject, game, setter, user, gameName}) => 
     const handleSaveButtonClick = (event) => {
         event.preventDefault()
 
+        const d = new Date();
+        let date = d.toISOString()
+
         let reviewToSendToAPI = {
             userId: user,
             game: game,
             review: review.review,
             rating: review.rating,
-            gameName: gameName
+            gameName: gameName,
+            date: date
         }
 
         fetch(`http://localhost:8088/gameReviews/${reviewObject.id}`, {

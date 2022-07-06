@@ -165,7 +165,7 @@ export const UserProfile = () => {
         }
         
     }
-
+/* 
     const friends = () => {
         if(currentFriends.length !== 0) {
             currentFriends.map(friend => {
@@ -188,7 +188,7 @@ export const UserProfile = () => {
 
         console.log('hello')
     }
-
+ */
     const showWall = () => {
 
     }
@@ -235,7 +235,7 @@ export const UserProfile = () => {
             <section className="currentlyPlaying">
                 <div className="playingTitle">Currently Playing</div>
                 <section className="currentGameDetails">
-                    <img src={`${currentGame?.image?.original_url}`}/>
+                    <img src={`${user.gameURL}`}/>
                 </section>
             </section>
 

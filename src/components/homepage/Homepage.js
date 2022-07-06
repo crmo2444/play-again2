@@ -4,6 +4,7 @@ import { HomepageFeatured } from "./HomepageFeatured"
 import { HomepageActivity } from "./HomepageActivity"
 import "./Homepage.css"
 import { useNavigate } from "react-router-dom"
+import { HomepageCurrentlyPlaying } from "./HomepageCurrentlyPlaying"
 
 export const Homepage = () => {
     const [featuredGames, setFeatured] = useState([])
@@ -48,7 +49,10 @@ export const Homepage = () => {
         <h1 className="headerTitle">Featured Games</h1>
         </section>
         <HomepageFeatured gameImages={gameImages}/>
-        {/* <HomepageActivity /> */}
+        <section className="bottomHalf">
+            <HomepageActivity />
+            <HomepageCurrentlyPlaying/>
+        </section>
         </section>
 
 

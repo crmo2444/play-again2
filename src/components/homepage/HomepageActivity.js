@@ -21,9 +21,9 @@ export const HomepageActivity = () => {
 
     useEffect(
         () => { 
-            let lastFiveReviews = gameReviews.slice(-5)
-            let lastFiveLibrary = gameLibrary.slice(-5)
-            let lastFiveWishlist = gameWishlist.slice(-5)
+            let lastFiveReviews = gameReviews.slice(-10)
+            let lastFiveLibrary = gameLibrary.slice(-10)
+            let lastFiveWishlist = gameWishlist.slice(-10)
 
             let sorted = []
 
@@ -67,7 +67,7 @@ export const HomepageActivity = () => {
                 return (a.date < b.date) ? -1 : ((a.date > b.date) ? 1 : 0);
             })
 
-            let mostRecent = (sorted.slice(-5)).reverse()
+            let mostRecent = (sorted.slice(-10)).reverse()
 
             setMostRecentActivity(mostRecent)
         },
@@ -124,7 +124,7 @@ export const HomepageActivity = () => {
     }
 
     return <section className="recentActivity">
-    <h3>Recent Activity</h3>
+    <h3 className="activityTitle">Recent User Activity</h3>
         {mostRecentActivity ? <>
             {mostRecentActivity.map(activity => {
                 return <section className="activity">

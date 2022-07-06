@@ -106,7 +106,7 @@ export const NotificationList = () => {
                         <button onClick={() => {denyFriend(notification)}}>Deny</button>
                     </section>
             })}
-        </> : <div>No notifications.</div>}
+        </> : <div className="notification">No notifications.</div>}
     </section>
     </>
 }
