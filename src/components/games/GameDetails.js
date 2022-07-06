@@ -77,8 +77,14 @@ export const GameDetails = () => {
 
     useEffect(
         () => {
-            let description = currentGame.description
-            setDescription(description)
+            if(typeof currentGame.description !== 'undefined'){
+                let description = currentGame.description
+                setDescription(description)
+            }
+
+            else {
+                setFormatted(currentGame.deck)
+            }
         },
         [currentGame]
     )
@@ -178,7 +184,7 @@ export const GameDetails = () => {
     const currentUserReviews = (review) => {
         if(localUserObject.id === review.userId) {
             return <>
-            <EditGameReview reviewObject={review} game={parseInt(gameId)} setter={setGameReviews} user={localUserObject.id}/>
+            <EditGameReview reviewObject={review} game={parseInt(gameId)} setter={setGameReviews} user={localUserObject.id} gameName={currentGame?.name}/>
             <DeleteGameReview id={review.id} game={parseInt(gameId)} setter={setGameReviews}/>
             </>
         }
@@ -352,7 +358,7 @@ export const GameDetails = () => {
         <a href={`https://www.amazon.com/s?k=${formattedName}+game&crid=GUOR689WXLXW&sprefix=${formattedName}+game%2Caps%2C179&ref=nb_sb_noss_1`}  target="_blank">
             <img className="buyNow" src="https://freestyleconnection.com/wp-content/uploads/2018/01/button-buy-amazon-01.png"/>
         </a>
-        <a href={`https://www.gamestop.com/search/?q=${formattedName}&lang=default&kpsdkCt=02BSGhFefeisWZCn5w52mgN6luEob7C8wHmWbeMYQ4erxSYF7RHtNuRyXvY77Zw0JAFHCCcW5mEjCVNhadSeDWRoVnlbSmrRLOhz1DY3EvlM7k1zRrs2myXYu5Ve3cvqGvaUT96zMYlgFxnRg0BjjF7VKKh`} target="_blank">
+        <a href={`https://www.gamestop.com/search/?q=${formattedName}&lang=default`} target="_blank">
             <img className="buy-Now" src="https://logos-world.net/wp-content/uploads/2021/02/GameStop-Logo-2000-present.jpg"/>
         </a>
         </section>

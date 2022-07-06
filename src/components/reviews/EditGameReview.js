@@ -1,13 +1,14 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 
-export const EditGameReview = ({reviewObject, game, setter, user}) => {
+export const EditGameReview = ({reviewObject, game, setter, user, gameName}) => {
     const [buttonState, setButtonState] = useState(false)
     const [review, setReview] = useState({
         userId: reviewObject.userId,
         game: game,
         review: reviewObject.review,
-        rating: reviewObject.rating
+        rating: reviewObject.rating,
+        gameName: gameName
     })
 
     let navigate = useNavigate()
@@ -19,7 +20,8 @@ export const EditGameReview = ({reviewObject, game, setter, user}) => {
             userId: user,
             game: game,
             review: review.review,
-            rating: review.rating
+            rating: review.rating,
+            gameName: gameName
         }
 
         fetch(`http://localhost:8088/gameReviews/${reviewObject.id}`, {

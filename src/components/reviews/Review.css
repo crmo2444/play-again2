@@ -6,6 +6,7 @@
 	border-radius:2px;
 	padding:20px;
 	font-family: Georgia, "Times New Roman", Times, serif;
+    border: 1px solid rgb(138, 138, 138);
 }
 .form-style-7 h1{
 	display: block;
@@ -83,7 +84,7 @@
 {
 }
 .form-style-7 li > span{
-	background: #949494;
+	background: #bb2323;
 	display: block;
 	padding: 3px;
 	margin: 0 -9px -9px -9px;

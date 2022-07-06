@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useNavigate, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import { keys } from "../../Settings"
 import { Friends } from "../friends/Friends"
 import { EditBio } from "./EditBio"
@@ -14,6 +14,12 @@ export const UserProfile = () => {
     const [user, setUser] = useState({})
     const [currentFriends, setCurrentFriends] = useState([])
     const [allUsers, setAllUsers] = useState([])
+    const [userReviews, setUserReviews] = useState([])
+    const [userGames, setUserGames] = useState([])
+    const [editCurrently, setEditCurrently] = useState(false)
+    const [currentGame, setCurrentGame] = useState([])
+    const [userWishlist, setUserWishlist] = useState([])
+    const [hasWishlist, setHasWishlist] = useState(false)
 
     const localUser = localStorage.getItem("current_user")
     const localUserObject = JSON.parse(localUser)
@@ -61,10 +67,45 @@ export const UserProfile = () => {
                             }
                         })
                 })
+
+            fetch(`http://localhost:8088/gameReviews?userId=${userId}`)
+                .then(response=>response.json())
+                .then((data) => {
+                    setUserReviews(data)
+                }) 
+
+            fetch(`http://localhost:8088/libraryGames?userId=${userId}`)
+                .then(response=>response.json())
+                .then((data) => {
+                    setUserGames(data)
+                }) 
                 
+            fetch(`http://localhost:8088/wishlistGames?userId=${userId}`)
+                .then(response=>response.json())
+                .then((data) => {
+                    if (data.length !== 0) {
+                        setUserWishlist(data)
+                        setHasWishlist(true)
+                    }
+                    else {
+                        setHasWishlist(false)
+                    }
+                }) 
+
             setCurrentFriends(friendArray)
         },
         []
+    )
+
+    useEffect(
+        () => {
+            userGames.map(game => {
+                if (game?.gameObject?.id === user.currentlyPlaying) {
+                    setCurrentGame(game.gameObject)
+                }
+            })
+        },
+        [userGames, currentUser]
     )
 /* 
     useEffect(
@@ -148,23 +189,71 @@ export const UserProfile = () => {
         console.log('hello')
     }
 
+    const showWall = () => {
+
+    }
+
     return <>
     <section className="header">
         <h1 className="logo" onClick={() => navigate("/")}>Play Again</h1>
         <h1 className="headerTitle">{user.firstName}'s Profile</h1>
     </section>
-    <section className="profileDetails">
-        <section className="profileName">
-            <div>{user.firstName} {user.lastName}</div>
+    <section className="wholeContainer">
+        <section className="leftSide">
+            <section className="profileDetails">
+                <section className="profilePicture">
+                    <img className="picture" src={user.profilePicture} alt="profile-picture"/>
+                </section>
+                <section className="profileName">
+                    <div>{user.firstName} {user.lastName}</div>
+                </section>
+                {showSettings()}
+            </section>
+            <section className="userGameReviews">
+                <div className="gameReviewsTitle">Game Reviews</div>
+                {userReviews ? <section className="userReviews">
+                    {userReviews.map(review => {
+                        return <section className="userReview">
+                            <Link to={`/game/${review.game}`}>
+                                <div>{review.gameName}</div>
+                            </Link>
+                                <div>{review.review}</div>
+                                <div>{review.rating}</div>
+                            </section>
+                    })}
+                </section> : <div>No game reviews yet.</div>}
+            </section>
         </section>
-        <section className="profilePicture">
-            <img className="picture" src={user.profilePicture} alt="profile-picture"/>
+
+        <section className="middle">
+            <section className="userWall">
+
+            </section>
         </section>
-        {showSettings()}
-    </section>
-    <section className="friendsList">
-        <div>Friends List:</div>
-        {currentFriends ? <>{friends()}</> : <div>Test</div>}
+
+        <section className="rightSide">
+            <section className="currentlyPlaying">
+                <div className="playingTitle">Currently Playing</div>
+                <section className="currentGameDetails">
+                    <img src={`${currentGame?.image?.original_url}`}/>
+                </section>
+            </section>
+
+            <section className="userWishlistGames">
+                <div className="wishlistTitle">Wishlist</div>
+                <section className="wishlistGames">
+                    {hasWishlist ? <>
+                        {userWishlist.map(game => {
+                            return <section className="wishlistGame">
+                                <Link to={`/game/${game?.gameObject?.id}`}>
+                                    <img src={`${game?.gameObject?.image?.original_url}`}/>
+                                </Link>
+                            </section>
+                        })}
+                    </> : <div>No items in wishlist.</div>}
+                </section>
+            </section>
+        </section>
     </section>
     </>
 }

@@ -64,55 +64,6 @@ export const AddGameReview = ({user, game, setter, setNoReviews, gameName}) => {
     
         return <>
         {buttonState ? <div classname="reviewContainer">
-            {/* <form action="/action_page.php">
-                <div className="row">
-                    <div className="col-25">
-                        <label htmlFor="review">Review </label>
-                    </div>
-                    <div className="col-75">
-                        <input
-                            required autoFocus
-                            type="text"
-                            className="form-control"
-                            value={review.review}
-                            onChange={
-                                (event) => {
-                                    const copy = {...review}
-                                    copy.review = event.target.value
-                                    update(copy)
-                                }
-                            } />
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-25">
-                        <label htmlFor="rating">Rating </label>
-                    </div>
-                    <div className="col-75">
-                        <input
-                            required autoFocus 
-                            type="number"
-                            className="form-control"
-                            value={review.rating}
-                            onChange={
-                                (event) => {
-                                    const copy = {...review}
-                                    copy.rating = event.target.value
-                                    update(copy)
-                                }
-                            } />
-                    </div>
-                </div>
-                <div className="row">
-                <button onClick={(clickEvent) => 
-                    handleSaveButtonClick(clickEvent)
-                }
-                className="btn btn-primary">
-                    Submit Review
-                </button>
-                </div>
-            </form> */}
-
         <form class="form-style-7">
             <ul>
             <li>

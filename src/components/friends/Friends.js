@@ -1,12 +1,18 @@
 import { useEffect, useState } from "react"
 import { AddFriend } from "./AddFriend"
 import { DeleteFriend } from "./DeleteFriend"
+import { IoMdArrowForward } from 'react-icons/io'
+import { IconContext } from "react-icons";
+import { useNavigate } from "react-router-dom";
+
 
 export const Friends = ({currentUserObj, otherUserObj}) => {
     const [friendsLists, setFriendsList] = useState([])
     const [friendshipStatus, setFriendshipStatus] = useState(false)
     const [requestState, setRequestState] = useState(false)
     const [sentRequestState, setSentRequestState] = useState(false)
+
+    let navigate = useNavigate()
 
     useEffect(
         () => {
@@ -80,9 +86,21 @@ export const Friends = ({currentUserObj, otherUserObj}) => {
         <button onClick={() => <DeleteFriend />}>Remove Friend</button>
         </> : <>
         {requestState ? <>
-            {sentRequestState ? <div>{otherUserObj.firstName} sent you a friend request.</div> : <div>Friend request sent.</div>}
+            {sentRequestState ? <><div className="friendStatus">{otherUserObj.firstName} sent you a friend request.</div> 
+            <IconContext.Provider value={{ color: "red", className: "global-class-name", size: "25"}}>
+                    <div>
+                    <IoMdArrowForward onClick={() => {navigate("/notifications")}}/>
+                    </div>
+                </IconContext.Provider>
+            </>: <div className="friendStatus">Friend request sent.</div>}
             </> : <>
-            {sentRequestState ? <div>{otherUserObj.firstName} sent you a friend request.</div> : <button onClick={() => sendFriendRequest()}>Add Friend</button>}
+            {sentRequestState ? <><div className="friendStatus">{otherUserObj.firstName} sent you a friend request.</div> 
+            <IconContext.Provider value={{ color: "red", className: "global-class-name", size: "25"}}>
+                    <div>
+                    <IoMdArrowForward className="arrow" onClick={() => {navigate("/notifications")}}/>
+                    </div>
+            </IconContext.Provider>
+            </>: <button onClick={() => sendFriendRequest()}>Add Friend</button>}
             </>}
         </>}
     </>

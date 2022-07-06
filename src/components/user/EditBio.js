@@ -47,9 +47,9 @@ export const EditBio = ({id, isUser}) => {
     <div className={`${feedback.includes("Error") ? "error" : "feedback"} ${feedback === "" ? "invisible" : "visible"}`}>
         {feedback}
     </div>
-            <h4>About Me</h4>
+            <h4 className="aboutMe">About Me</h4>
     {isUser ? <>{edit ? <>
-    <fieldset>
+    <fieldset className="bioInput">
         <div className="form-group">
             <input
                 required autoFocus
@@ -73,8 +73,8 @@ export const EditBio = ({id, isUser}) => {
                 Save
             </button>
             </> : <>
-            <div>{user.bio}</div>
-            <button onClick={() => {setEdit(true)}}>Edit</button>
-            </> }</> : <div>{user.bio}</div>}
+            <div className="userBio">{user.bio}</div>
+            <button className="editProfileButton" onClick={() => {setEdit(true)}}>Edit</button>
+            </> }</> : <div className="userBio">{user.bio}</div>}
     </>
 }
