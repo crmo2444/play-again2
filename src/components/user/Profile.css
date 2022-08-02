@@ -1,7 +1,11 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300&display=swap');
+
 .picture {
     width: 10rem;
     height: 10rem;
     margin: 1rem;
+    border-radius: 85px;
 }
 
 .topHeader {
@@ -16,10 +20,164 @@
 
 .profileDetails {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    border: 1px solid rgb(196, 196, 196);
+    width: 30rem;
+    text-align: center;
+    margin-left: 3rem;
+    background-color: rgb(240, 240, 240);
+    border-radius: 5px;
+    box-shadow: 0px 3px 15px rgba(0,0,0,0.2);
 }
 
 /* button {
     width: 9rem;
     height: 1.5rem;
 } */
+
+/* <div class="mt-3">
+                        <h4 class="font-13 text-uppercase">About Me :</h4>
+                        <p class="text-muted font-13 mb-3">
+                            Hi I'm Johnathn Deo,has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type.
+                        </p>
+                        <p class="text-muted mb-2 font-13"><strong>Full Name :</strong> <span class="ms-2">Geneva D. McKnight</span></p>
+                    
+                        <p class="text-muted mb-2 font-13"><strong>Mobile :</strong><span class="ms-2">(123) 123 1234</span></p>
+                    
+                        <p class="text-muted mb-2 font-13"><strong>Email :</strong> <span class="ms-2">user@email.domain</span></p>
+                    
+                        <p class="text-muted mb-1 font-13"><strong>Location :</strong> <span class="ms-2">USA</span></p>
+                    </div> */
+
+.friend-picture {
+    width: 3rem;
+    height: 3rem;
+    margin: 1rem;
+}
+
+.profile {
+    display: flex;
+    flex-direction: column;
+    width: 18rem;
+    margin-left: 0.75rem;
+}
+
+.profileName {
+    font-size: 22pt;
+}
+
+.profile__title {
+    margin-left: 5rem;
+    margin-bottom: -2rem;
+}
+
+.bioInput {
+    margin-left: 0.75rem;
+    width: 18rem;
+}
+
+.userBio {
+    font-family: 'Roboto Condensed', sans-serif;
+    margin-bottom: 1rem;
+}
+
+.aboutMe {
+    margin: 0;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.editProfileButton {
+    margin-bottom: 1rem;
+}
+
+.leftSide {
+    display: flex;
+    flex-direction: column;
+    margin-top: 3rem;
+}
+
+.userGameReviews {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgb(196, 196, 196);
+    width: 30rem;
+    text-align: center;
+    margin-left: 3rem;
+    background-color: rgb(240, 240, 240);
+    border-radius: 5px;
+    box-shadow: 0px 3px 15px rgba(0,0,0,0.2);
+    margin-top: 2rem;
+    max-height: 28.2rem;
+    overflow-y: scroll;
+}
+
+.userReview {
+    border: 1px solid rgb(196, 196, 196);
+    margin: 1rem;
+    font-family: 'Roboto Condensed', sans-serif;
+    background-color: white;
+    box-shadow: 0px 3px 7px rgba(0,0,0,0.2);
+}
+
+.gameReviewsTitle, .playingTitle, .wishlistTitle {
+    font-size: 20pt;
+}
+
+.friendStatus {
+    color: red;
+}
+
+.arrow {
+    position: absolute;
+    left: 50rem;
+    top: 27.3rem;
+}
+
+.arrow:hover {
+    cursor: pointer;
+}
+
+.currentlyPlaying {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgb(196, 196, 196);
+    width: 30rem;
+    text-align: center;
+    margin-left: 3rem;
+    background-color: rgb(240, 240, 240);
+    border-radius: 5px;
+    box-shadow: 0px 3px 15px rgba(0,0,0,0.2);
+    margin-right: 3rem;
+    margin-top: 3rem;
+}
+
+.currentGameDetails img, .wishlistGame img {
+    width: 10rem;
+    height: 15rem;
+    border: 1px solid grey;
+    box-shadow: 5px 4px #88888871;
+    margin-bottom: 1rem;
+}
+
+.wholeContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.userWishlistGames {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgb(196, 196, 196);
+    width: 30rem;
+    text-align: center;
+    margin-left: 3rem;
+    background-color: rgb(240, 240, 240);
+    border-radius: 5px;
+    box-shadow: 0px 3px 15px rgba(0,0,0,0.2);
+    margin-right: 3rem;
+    margin-top: 2rem;
+    overflow-y: scroll;
+    height: 31.5rem;
+}

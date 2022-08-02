@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { getAllReviews, setLibraryGames, setWishlistGames } from "../../FetchRequests"
 
 export const HomepageActivity = () => {
@@ -21,9 +21,9 @@ export const HomepageActivity = () => {
 
     useEffect(
         () => { 
-            let lastFiveReviews = gameReviews.slice(-5)
-            let lastFiveLibrary = gameLibrary.slice(-5)
-            let lastFiveWishlist = gameWishlist.slice(-5)
+            let lastFiveReviews = gameReviews.slice(-10)
+            let lastFiveLibrary = gameLibrary.slice(-10)
+            let lastFiveWishlist = gameWishlist.slice(-10)
 
             let sorted = []
 
@@ -67,7 +67,7 @@ export const HomepageActivity = () => {
                 return (a.date < b.date) ? -1 : ((a.date > b.date) ? 1 : 0);
             })
 
-            let mostRecent = (sorted.slice(-5)).reverse()
+            let mostRecent = (sorted.slice(-10)).reverse()
 
             setMostRecentActivity(mostRecent)
         },
@@ -86,7 +86,7 @@ export const HomepageActivity = () => {
 
         if(activity.review === true) {
             return <>
-            <div className="line-one">{activity?.user?.firstName} {activity?.user?.lastName} reviewed {activity.gameName}!</div>
+            <div className="line-one"><Link to={`/profile/${activity?.user?.id}`}>{activity?.user?.firstName} {activity?.user?.lastName}</Link> reviewed {activity.gameName}!</div>
             <div className="line-two">{formattedDate}</div>
             <button onClick={() => navigate(`/game/${activity.game}`)}>See Details</button>
             </>
@@ -94,14 +94,14 @@ export const HomepageActivity = () => {
 
         else if(activity.library === true) {
             return <>
-            <div className="line-one">{activity?.user?.firstName} {activity?.user?.lastName} added {activity.gameName} to their library!</div>
+            <div className="line-one"><Link to={`/profile/${activity?.user?.id}`}>{activity?.user?.firstName} {activity?.user?.lastName}</Link> added {activity.gameName} to their library!</div>
             <div className="line-two">{formattedDate}</div>
             </>
         }
 
         else if(activity.wishlist === true) {
             return <>
-            <div className="line-one">{activity?.user?.firstName} {activity?.user?.lastName} added {activity.gameName} to their wishlist!</div>
+            <div className="line-one"><Link to={`/profile/${activity?.user?.id}`}>{activity?.user?.firstName} {activity?.user?.lastName}</Link> added {activity.gameName} to their wishlist!</div>
             <div className="line-two">{formattedDate}</div>
             </>
         }
@@ -124,7 +124,7 @@ export const HomepageActivity = () => {
     }
 
     return <section className="recentActivity">
-    <h3>Recent Activity</h3>
+    <h3 className="activityTitle">Recent User Activity</h3>
         {mostRecentActivity ? <>
             {mostRecentActivity.map(activity => {
                 return <section className="activity">

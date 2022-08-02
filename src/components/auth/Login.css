@@ -7,20 +7,28 @@ fieldset {
     padding: 1rem 0;
     margin: 0;
     border: 0;
+
 }
 
 .form--login {
     display: inline-block;
     margin: 0 auto;
-    text-align: left;
+    text-align: center;
+}
+
+.form--login h1 {
+    text-align: center;
+    margin-right: 1rem;
 }
 
 .form--login > fieldset > input[type="email"] {
     width: 25em;
+    margin-left: 9rem;
 }
 
 .form--login > fieldset > input[type="password"] {
     width: 25em;
+    margin-left: 9rem;
 }
 
 .label--login {

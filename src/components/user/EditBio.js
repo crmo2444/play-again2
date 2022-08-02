@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react"
 
-export const EditBio = ({id}) => {
+export const EditBio = ({id, isUser}) => {
     const [user, updateBio] = useState({
         bio: ""
     })
     const [edit, setEdit] = useState(false)
-
     const [feedback, setFeedback] = useState("")
 
     useEffect(() => {
@@ -22,20 +21,14 @@ export const EditBio = ({id}) => {
                 .then((data) => {
                     const customerObject = data[0]
                     updateBio(customerObject)
-
                 })
+
         },
         []
     )
 
-
     const handleSaveButtonClick = (event) => {
         event.preventDefault()
-        /*
-            TODO: Perform the PUT fetch() call here to update the profile.
-            Navigate user to home page when done.
-        */
-       
 
         fetch(`http://localhost:8088/users/${id}`, {
             method: "PUT",
@@ -54,9 +47,9 @@ export const EditBio = ({id}) => {
     <div className={`${feedback.includes("Error") ? "error" : "feedback"} ${feedback === "" ? "invisible" : "visible"}`}>
         {feedback}
     </div>
-            <h4>About Me</h4>
-    {edit ? <>
-    <fieldset>
+            <h4 className="aboutMe">About Me</h4>
+    {isUser ? <>{edit ? <>
+    <fieldset className="bioInput">
         <div className="form-group">
             <input
                 required autoFocus
@@ -80,8 +73,8 @@ export const EditBio = ({id}) => {
                 Save
             </button>
             </> : <>
-            <div>{user.bio}</div>
-            <button onClick={() => {setEdit(true)}}>Edit</button>
-            </> }
+            <div className="userBio">{user.bio}</div>
+            <button className="editProfileButton" onClick={() => {setEdit(true)}}>Edit</button>
+            </> }</> : <div className="userBio">{user.bio}</div>}
     </>
 }

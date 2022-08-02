@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react"
+import 'react-slideshow-image/dist/styles.css'
 import { HomepageFeatured } from "./HomepageFeatured"
 import { HomepageActivity } from "./HomepageActivity"
 import "./Homepage.css"
 import { useNavigate } from "react-router-dom"
+import { HomepageCurrentlyPlaying } from "./HomepageCurrentlyPlaying"
 
 export const Homepage = () => {
     const [featuredGames, setFeatured] = useState([])
@@ -28,6 +30,10 @@ export const Homepage = () => {
             featuredGames.map(game => {
                 allImages.push({
                     image: game?.image?.original_url,
+                    background: game.background,
+                    name: game.name,
+                    deck: game.deck,
+                    trailer: game.trailer,
                     id: game.id
                 })
             })
@@ -38,10 +44,16 @@ export const Homepage = () => {
     )
 
     return <section className="homepage">
-        <HomepageFeatured gameImages={gameImages}/>
-        <button className="playAgain" onClick={() => navigate("/play-again")}>Ready to Play Again?</button>
-
-        <HomepageActivity />
+        <section className="header">
+        <h1 className="logo" onClick={() => navigate("/")}>Play Again</h1>
+        <h1 className="headerTitle">Featured Games</h1>
         </section>
+        <HomepageFeatured gameImages={gameImages}/>
+        <section className="bottomHalf">
+            <HomepageActivity />
+            <HomepageCurrentlyPlaying/>
+        </section>
+        </section>
+
 
 }

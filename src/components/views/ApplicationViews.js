@@ -7,6 +7,7 @@ import { GameWishlist } from "../wishlist/GameWishlist"
 import { Homepage } from "../homepage/Homepage"
 import { PlayAgainCode } from "../user/PlayAgainCode"
 import { UserProfile } from "../user/UserProfile"
+import { NotificationList } from "../notifications/NotificationList"
 
 export const ApplicationViews = () => {
 	return (
@@ -24,8 +25,8 @@ export const ApplicationViews = () => {
             <Route path="wishlist" element={ <GameWishlist /> } />
             <Route path="play-again" element={ <PlayAgainCode /> } />
             <Route path="/" element={ <Homepage /> } />
-            <Route path="profile" element={ <UserProfile /> } />
-            
+            <Route path="profile/:userId" element={ <UserProfile /> } />
+            <Route path="notifications" element={ <NotificationList /> } />
 
             </Route>
         </Routes>

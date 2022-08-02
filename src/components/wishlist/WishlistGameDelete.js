@@ -1,3 +1,6 @@
+import { CgCloseR } from 'react-icons/cg'
+import { IconContext } from "react-icons";
+
 export const WishlistGameDelete = ({id, setEmpty, setWishlist}) => {
     const localUser = localStorage.getItem("current_user")
     const localUserObject = JSON.parse(localUser)
@@ -20,5 +23,9 @@ export const WishlistGameDelete = ({id, setEmpty, setWishlist}) => {
         )
     }
 
-    return <button onClick={(event) => {handleDeleteGame(event)}}>Remove</button>
+    return <IconContext.Provider value={{ color: "white", className: "global-class-name", size: "30"}}>
+    <div>
+      <CgCloseR title="Delete" onClick={(event) => {handleDeleteGame(event)}}/>
+    </div>
+  </IconContext.Provider>
 }

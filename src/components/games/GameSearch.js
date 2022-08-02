@@ -14,7 +14,8 @@ export const GameSearch = () => {
     const [buttonArray, setButtonArray] = useState([])
     const [page, setPage] = useState(1)
     const [resultsString, setResultsString] = useState("")
-/*     const [steamUser, setSteamUser] = useState([]) */
+
+    let navigate = useNavigate()
 
     useEffect(
         () => {
@@ -95,12 +96,15 @@ export const GameSearch = () => {
                 })
     }
 
-    return (
-        <div>
-            <div>Input Title or Keyword</div>
+    return <section className="searchPage">
+        <section className="header">
+            <h1 className="logo" onClick={() => navigate("/")}>Play Again</h1>
+            <h1 className="headerTitle">Find Games</h1>
+        </section>
+        <div className="searchBar">
             <input 
                 type="text" 
-                placeholder="Search..."
+                placeholder="Input Title or Keyword..."
                 onChange={
                     (changeEvent) => {
                         let search = changeEvent.target.value
@@ -113,28 +117,28 @@ export const GameSearch = () => {
                    } 
                 }}
                 />
-            <button onClick={() => searchGames(searchTerms, 1)}>Search</button>
-
+            <button className="searchButton" onClick={() => searchGames(searchTerms, 1)}>Search</button>
+        </div>
             {searchResults.length !== 0 ? <>
+            <section className="pageNumbers">
             <div>Showing {resultsString} of {searchResultsNumber} results</div>
             {buttonArray.map(button => {
                 if(button === 1) {
-                return <button className="pageNumber" onClick={() => 
-                    {setPage(button)
-                    showGames(searchTerms, button)}} autoFocus>{button}</button>
-                }
-                else {
                     return <button className="pageNumber" onClick={() => 
                         {setPage(button)
-                        showGames(searchTerms, button)}}>{button}</button>
-                }
-            })}
+                            showGames(searchTerms, button)}} autoFocus>{button}</button>
+                        }
+                        else {
+                            return <button className="pageNumber" onClick={() => 
+                                {setPage(button)
+                                    showGames(searchTerms, button)}}>{button}</button>
+                                }
+                            })}
+            </section>
+            <br></br>
             <section className="resultsContainer">
             {searchResults.map(result => <Game key={`game--${result.id}`} gameObject={result}/>)}
             </section>
-            </> : <>
-            <div>Nothing to see here</div>
-            </>}
-        </div>
-    )
+            </> : null}
+        </section>
 }

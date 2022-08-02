@@ -8,6 +8,7 @@ export const Game = ({gameObject}) => {
     const [platforms, setPlatforms] = useState([])
     const [chosenConsole, setChosen] = useState("")
     const [wishlist, setWishlist] = useState([])
+    const [yearFormat, setYearFormat] = useState("")
 
     let navigate = useNavigate()
 
@@ -38,6 +39,7 @@ export const Game = ({gameObject}) => {
                 foundGame = true
             }
         })
+
 
         let foundPlatform = platforms.find(platform => platform.id === chosenConsole)
 
@@ -122,6 +124,7 @@ export const Game = ({gameObject}) => {
                     <div className="gameTitle">
                         <Link to={`/game/${gameObject.id}`}> {gameObject.name}</Link>
                     </div>
+                    <div className="gameReleaseDate">{gameObject?.original_release_date}</div>
                     <div className="gameDescription">
                         <div>{gameObject.deck}</div>
                     </div>

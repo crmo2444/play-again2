@@ -1,11 +1,52 @@
 
 .gameLibrary {
     display: grid;
-    grid-template-rows: 21rem 21rem; /* 2 rows of 50px */
-    grid-auto-flow: column;  /* a column flow */
-    grid-auto-columns: 18rem; /* each column will 100px of width */
-    grid-gap: 3rem;
+    grid-template-columns: auto auto auto auto auto auto;
+    padding: 10px;
     overflow: auto;
     width: 100vw;
     height: 100vh;
+    position: relative;
+}
+
+.games {
+    margin-bottom: 1rem;
+    position: relative;
+    margin-left: 1.5rem;
+}
+
+.overlay {
+    position: relative;
+    z-index: 1;
+}
+
+.libraryGameImage {
+    width: 15rem;
+    height: 20rem;
+    border: 1px solid grey;
+    box-shadow: 5px 4px #88888871;
+    position: relative;
+    transition: 0.5s cubic-bezier(0.6, 0.03, 0.28, 0.98);  
+    transform: scale(1);
+}
+
+.libraryGameImage:hover {
+    transform: scale(1.05);
+    transition: 0.5s cubic-bezier(0.6, 0.03, 0.28, 0.98);
+}
+
+.pageButtons {
+    position: absolute;
+    z-index: 2;
+    top: 17.5rem;
+    display: none;
+    left: 12.5rem;	
+}
+
+.games:hover .pageButtons { 
+	display:block;
+}
+
+.gameFilter {
+    margin-left: 2rem;
 }

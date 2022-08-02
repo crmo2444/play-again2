@@ -1,12 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Bebas Neue', cursive;
+  letter-spacing: 0.75px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   height: 100%;
   width: 100;
+  overflow-x: hidden;
 }
 
 code {
@@ -15,15 +17,17 @@ code {
 }
 
 .feedback {
-  border: 1px dotted cadetblue;
+  border: 1px solid rgb(33, 126, 129);
   padding: 1rem;
-  background-color: rgb(218, 230, 247);
+  background-color: rgb(160, 195, 243);
   position: absolute;
   top: 20%;
   left: 50%;
-  width: 70%;
+  width: 10%;
   transform: translate(-50%, -50%);
   animation: 1s slideDown;
+  font-size: 14pt;
+  text-align: center;
 }
 
 .invisible {

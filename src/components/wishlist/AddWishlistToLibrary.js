@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react"
 import { addToGameLibrary, setLibraryGames } from "../../FetchRequests"
+import { BiLibrary } from 'react-icons/bi'
+import { IconContext } from "react-icons";
 
 export const AddWishlistToLibrary = ({id, setEmpty, setWishlist, platform, gameObj}) => {
     const [library, setLibrary] = useState([])
@@ -26,6 +28,7 @@ export const AddWishlistToLibrary = ({id, setEmpty, setWishlist, platform, gameO
                 game.gameObject.platforms.map(plat => {
                     if(platform === plat) {
                         name = plat.name
+                        console.log(plat)
                     }
                 })
                 foundGame = true
@@ -33,7 +36,7 @@ export const AddWishlistToLibrary = ({id, setEmpty, setWishlist, platform, gameO
         })
 
         if (foundGame) {
-            return window.alert(`${gameObj?.gameObject?.name} on ${name} already in library.`)
+            return window.alert(`${gameObj?.gameObject?.name} already in library.`)
         }
         else {
             addToLibrary()
@@ -75,5 +78,9 @@ export const AddWishlistToLibrary = ({id, setEmpty, setWishlist, platform, gameO
             }
         )
     } 
-    return <button className="addLibrary" onClick={()=>checkLibrary()}>Add to Library</button>
+    return <IconContext.Provider value={{ color: "white", className: "global-class-name", size: "30"}}>
+    <div>
+      <BiLibrary title="Add to Library" onClick={()=>checkLibrary()}/>
+    </div>
+  </IconContext.Provider>
 }

@@ -1,6 +1,6 @@
 import { set } from "mithril/route"
 import { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { keys } from "../../Settings"
 import "./PlayAgainCode.css"
 import { PlayAgainResults } from "./PlayAgainResults"
@@ -20,6 +20,8 @@ export const PlayAgainCode = () => {
 
     const localUser = localStorage.getItem("current_user")
     const localUserObject = JSON.parse(localUser)
+
+    let navigate = useNavigate()
 
     useEffect(
         () => {
@@ -165,11 +167,15 @@ export const PlayAgainCode = () => {
     )
 
     return <>
-    <h1>Play Again</h1>
+    <section className="header">
+            <h1 className="logo" onClick={() => navigate("/")}>Play Again</h1>
+            <h1 className="headerTitle">Play Again!</h1>
+        </section>
     <ul>
-    {userLibraryGames ? <>
+    {userLibraryGames ? <section className="wholePlayAgain">   
+        <section className="gamesOnly">
         {userLibraryGames.map(game => {
-            return <li>
+            return <li className="libraryList">
                 <input type="checkbox"
                  id={`${game?.gameObject?.id}`} 
                  value={`${game?.gameObject?.name}`}
@@ -180,25 +186,32 @@ export const PlayAgainCode = () => {
                  }}/>
                 <label htmlFor={`${game?.gameObject?.id}`}><img className="gameImage" src={game?.gameObject?.image?.original_url} alt={`${game?.gameObject?.name}`}/></label>
                 </li> })}
+        </section>
         {selectState ? 
-        <><button onClick={() => 
+        <section className="buttonsOnly">
+        <button className="selectButton" onClick={() => 
         {selectAll(false)
         setSelectState(false)
         handleAllChecks([])}}>Deselect All</button>
-        <button>Play Again!</button></> : 
-            <><button onClick={() => 
+        <button className="playAgainButton" id="box" onClick={() => {
+                setUserPicks(picks)
+            }}>Play Again!</button>
+        </section> : 
+            <section className="buttonsOnly">
+            <button className="selectButton" onClick={() => 
             {selectAll(true)
             setSelectState(true)
             handleAllChecks(allLibraryIds)}}>Select All</button>
-            <button onClick={() => {
+            <button className="playAgainButton" id="box" onClick={() => {
                 setUserPicks(picks)
-            }}>Play Again!</button></>}
-        </> : <div>No games in library.</div>}
+            }}>Play Again!</button>
+            </section>}
+        </section> : <div>No games in library.</div>}
 
     </ul>
     <ul>
         {similarGames.length !== 0 ? <>
-        <h3>Results</h3>
+        <h3 className="resultsTitle">Results</h3>
         <section className="allResults">
         {similarGameObject.map(game => {
             return <PlayAgainResults key={`game--${game.id}`} id={game.id} />

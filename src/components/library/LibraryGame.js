@@ -18,12 +18,16 @@ export const LibraryGame = ({game, setterGames, setterLibrary}) => {
         []
     )
 
-    return <section className="game">
+    return <section className="games">
         <Link to={`/game/${game?.gameObject?.id}`}>
-        <img className="gameImage" src={game?.gameObject?.image?.original_url} alt={game?.gameObject?.name} title={game?.gameObject?.name}/>
+        <img className="libraryGameImage" src={game?.gameObject?.image?.original_url} alt={game?.gameObject?.name} title={game?.gameObject?.name}/>
         </Link>
-        <div>On {foundPlatform.name}</div>
-        <LibraryGameDelete id={game.id} setEmpty={setterGames} setLibrary={setterLibrary} />
-        <button className="pageButton" onClick={() => navigate(`/game/${game?.gameObject?.id}`)}>Details</button>
+        <div className="overlay"></div>
+        <div className="pageButtons">
+            <LibraryGameDelete id={game.id} setEmpty={setterGames} setLibrary={setterLibrary} />
+        </div>
+        <div>{foundPlatform.name}</div>
+        {/* <LibraryGameDelete id={game.id} setEmpty={setterGames} setLibrary={setterLibrary} /> */}
+        {/* <button className="pageButton" onClick={() => navigate(`/game/${game?.gameObject?.id}`)}>Details</button> */}
     </section> 
 }
